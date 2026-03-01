@@ -17,7 +17,8 @@ defineProps<{
     
     <div class="card-body">
       <h3 class="product-title">{{ product.title }}</h3>
-      <p class="manufacturer">By {{ product.brand }}</p>
+      
+      <p class="manufacturer">By {{ product.brand || 'ElectroHub' }}</p>
       
       <div class="price-row">
         <span class="price">${{ product.price }}</span>
@@ -34,7 +35,7 @@ defineProps<{
 </template>
 
 <style scoped>
-/* Professional Card Styling */
+/* Professional Card Styling for ElectroHub */
 .card {
   background: white;
   border-radius: 12px;
