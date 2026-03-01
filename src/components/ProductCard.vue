@@ -1,9 +1,8 @@
-
 <script setup lang="ts">
-// 1. Import the Type from your new folder
+// 1. This connects to your custom folder to ensure 'Type Safety'
 import type { Product } from '../types/Product';
 
-// 2. Define the Props so App.vue can pass data to this card
+// 2. This defines the 'Props' so App.vue can pass data into this card
 defineProps<{
   product: Product
 }>();
@@ -35,6 +34,7 @@ defineProps<{
 </template>
 
 <style scoped>
+/* Professional Card Styling */
 .card {
   background: white;
   border-radius: 12px;
@@ -42,6 +42,8 @@ defineProps<{
   box-shadow: 0 4px 6px rgba(0,0,0,0.05);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   border: 1px solid #eee;
+  display: flex;
+  flex-direction: column;
 }
 
 .card:hover {
@@ -53,27 +55,37 @@ defineProps<{
   position: relative;
   height: 200px;
   background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-img { width: 100%; height: 100%; object-fit: contain; padding: 10px; }
+img { 
+  width: 100%; 
+  height: 100%; 
+  object-fit: contain; 
+  padding: 10px; 
+}
 
 .category-tag {
   position: absolute;
   top: 10px;
   left: 10px;
-  background: rgba(44, 62, 80, 0.8);
+  background: rgba(44, 62, 80, 0.9);
   color: white;
-  padding: 4px 10px;
+  padding: 4px 12px;
   border-radius: 20px;
-  font-size: 0.75rem;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
-.card-body { padding: 20px; }
+.card-body { padding: 20px; flex-grow: 1; }
 
 .product-title {
   margin: 0 0 5px 0;
   font-size: 1.1rem;
-  color: #333;
+  color: #2c3e50;
 }
 
 .manufacturer {
@@ -90,12 +102,12 @@ img { width: 100%; height: 100%; object-fit: contain; padding: 10px; }
 }
 
 .price {
-  font-size: 1.25rem;
+  font-size: 1.3rem;
   font-weight: 700;
   color: #27ae60;
 }
 
-.stock-status { font-size: 0.8rem; padding: 2px 8px; border-radius: 4px; }
+.stock-status { font-size: 0.75rem; padding: 4px 8px; border-radius: 6px; }
 .stable { background: #e8f5e9; color: #2e7d32; }
 .critical { background: #ffebee; color: #c62828; }
 
@@ -105,7 +117,7 @@ img { width: 100%; height: 100%; object-fit: contain; padding: 10px; }
   color: white;
   border: none;
   padding: 12px;
-  border-radius: 6px;
+  border-radius: 8px;
   font-weight: 600;
   cursor: pointer;
   transition: background 0.2s;
