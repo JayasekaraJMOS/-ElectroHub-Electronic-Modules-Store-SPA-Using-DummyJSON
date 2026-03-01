@@ -7,30 +7,40 @@ const products = ref<Product[]>([]);
 const searchQuery = ref(''); 
 const isLoading = ref(true);
 
-// The main fetch function
 const fetchProducts = async (query = '') => {
   isLoading.value = true;
   try {
-    const url = query 
-      ? `https://dummyjson.com/products/search?q=${query}` 
-      : 'https://dummyjson.com/products/search?q=lighting';
+    let url = '';
+    
+    if (query) {
+      // If searching, use the search endpoint
+      url = `https://dummyjson.com/products/search?q=${query}`;
+    } else {
+      // If no search, get a large batch of items (e.g., 50) to pick from
+      url = 'https://dummyjson.com/products?limit=50';
+    }
       
     const response = await fetch(url);
     const data = await response.json();
-    products.value = data.products;
+    let results = data.products;
+
+    // RANDOMIZER LOGIC: Only shuffle if we aren't searching
+    if (!query) {
+      results = results
+        .sort(() => Math.random() - 0.5) // Shuffles the array randomly
+        .slice(0, 12); // Take only the first 12 random items
+    }
+
+    products.value = results;
   } catch (error) {
-    console.error("Search failed:", error);
+    console.error("Fetch failed:", error);
   } finally {
     isLoading.value = false;
   }
 };
 
-// Initial load
-onMounted(() => {
-  fetchProducts();
-});
+onMounted(() => fetchProducts());
 
-// Watcher for search bar
 watch(searchQuery, (newVal) => {
   if (newVal.length > 2 || newVal.length === 0) {
     fetchProducts(newVal);
@@ -95,11 +105,22 @@ header { text-align: center; margin-bottom: 40px; }
 }
 
 .product-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+  display: grid !important;
+  /* FORCING 3 COLUMNS TO TEST */
+  grid-template-columns: 1fr 1fr 1fr; 
   gap: 20px;
   width: 100%;
-  padding: 20px 0;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* On small screens, go back to 1 column */
+@media (max-width: 768px) {
+  .product-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .status { text-align: center; margin-top: 50px; color: #3498db; }

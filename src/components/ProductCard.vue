@@ -39,13 +39,13 @@ defineProps<{
 .card {
   background: white;
   border-radius: 12px;
-  /* DO NOT use width: 100vw or width: 1000px here */
-  width: 100%; 
-  max-width: 350px; /* This limits the size so others can fit next to it */
-  margin: 0 auto;
+  /* CRUCIAL: Remove fixed widths. Let the grid decide the width. */
+  width: auto; 
+  min-width: 0; /* Prevents the card from pushing out of the grid cell */
   display: flex;
   flex-direction: column;
   border: 1px solid #eee;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
 .card:hover {
