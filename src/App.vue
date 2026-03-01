@@ -1,38 +1,24 @@
 <script setup lang="ts">
-import { ref, onMounted, watch } from 'vue';
+import { ref, onMounted } from 'vue';
+// This ensures you are using your custom type for strict typing
 import type { Product } from './types/Product';
 import ProductCard from './components/ProductCard.vue';
 
 const products = ref<Product[]>([]);
-const searchQuery = ref(''); // Holds the user's input
 const isLoading = ref(true);
 
-// Function to fetch products based on search
-const fetchProducts = async (query = '') => {
-  isLoading.value = true;
+onMounted(async () => {
   try {
-    // If query is empty, it shows 'lighting' by default for your electronics theme
-    const endpoint = query 
-      ? `https://dummyjson.com/products/search?q=${query}` 
-      : 'https://dummyjson.com/products/search?q=lighting';
-      
-    const response = await fetch(endpoint);
+    // We fetch a search result for 'lighting' to get a group of electronic-themed items
+    const response = await fetch('https://dummyjson.com/products/search?q=lighting');
     const data = await response.json();
-    products.value = data.products;
+    
+    // products.value must be set to data.products to get the full list
+    products.value = data.products; 
   } catch (error) {
-    console.error("Search failed:", error);
+    console.error("Fetch failed:", error);
   } finally {
     isLoading.value = false;
-  }
-};
-
-// Fetch initial data
-onMounted(() => fetchProducts());
-
-// Automatically search when the user stops typing (debouncing is better, but this is simple for now)
-watch(searchQuery, (newQuery) => {
-  if (newQuery.length > 2 || newQuery.length === 0) {
-    fetchProducts(newQuery);
   }
 });
 </script>
@@ -41,29 +27,18 @@ watch(searchQuery, (newQuery) => {
   <div class="app-container">
     <header>
       <h1>🔌 ElectroHub</h1>
-      <div class="search-wrapper">
-        <input 
-          v-model="searchQuery" 
-          type="text" 
-          placeholder="Search modules (e.g., LED, lamp, phone)..." 
-          class="search-input"
-        />
-      </div>
+      <p>Project Modules & Components</p>
     </header>
 
-    <div v-if="isLoading" class="loading">Searching database...</div>
+    <div v-if="isLoading" class="loading">Searching warehouse...</div>
 
-    <main v-else-if="products.length > 0" class="product-grid">
+    <main v-else class="product-grid">
       <ProductCard 
         v-for="item in products" 
         :key="item.id" 
         :product="item" 
       />
     </main>
-    
-    <div v-else class="no-results">
-      No modules found for "{{ searchQuery }}".
-    </div>
   </div>
 </template>
 
@@ -106,4 +81,29 @@ header { text-align: center; margin-bottom: 40px; }
   margin-top: 50px;
   color: #7f8c8d;
 }
+
+body {
+  margin: 0;
+  background-color: #1a1a1a; /* Dark theme to match your ElectroHub logo */
+  color: white;
+  font-family: Arial, sans-serif;
+}
+
+.app-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+header { text-align: center; margin-bottom: 40px; }
+
+/* THIS IS THE CSS THAT FIXES THE SINGLE ITEM LOOK */
+.product-grid {
+  display: grid;
+  /* repeat(auto-fill...) makes the grid responsive for all screen sizes */
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 25px;
+}
+
+.loading { text-align: center; font-size: 1.5rem; margin-top: 50px; }
 </style>
