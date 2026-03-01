@@ -7,11 +7,10 @@ const products = ref<Product[]>([]);
 const searchQuery = ref(''); 
 const isLoading = ref(true);
 
-// 1. Fetch function that handles both general list and searches
+// The main fetch function
 const fetchProducts = async (query = '') => {
   isLoading.value = true;
   try {
-    // If query is empty, it fetches 'lighting' products by default
     const url = query 
       ? `https://dummyjson.com/products/search?q=${query}` 
       : 'https://dummyjson.com/products/search?q=lighting';
@@ -26,9 +25,12 @@ const fetchProducts = async (query = '') => {
   }
 };
 
-onMounted(() => fetchProducts());
+// Initial load
+onMounted(() => {
+  fetchProducts();
+});
 
-// 2. Watcher to trigger search as you type
+// Watcher for search bar
 watch(searchQuery, (newVal) => {
   if (newVal.length > 2 || newVal.length === 0) {
     fetchProducts(newVal);
@@ -80,7 +82,6 @@ body {
 
 header { text-align: center; margin-bottom: 40px; }
 
-/* SEARCH BAR STYLING */
 .search-container { margin: 20px 0; }
 .search-bar {
   width: 100%;
@@ -93,11 +94,12 @@ header { text-align: center; margin-bottom: 40px; }
   outline: none;
 }
 
-/* THE GRID SYSTEM */
 .product-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 25px;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+  gap: 20px;
+  width: 100%;
+  padding: 20px 0;
 }
 
 .status { text-align: center; margin-top: 50px; color: #3498db; }

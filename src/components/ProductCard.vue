@@ -39,12 +39,13 @@ defineProps<{
 .card {
   background: white;
   border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  border: 1px solid #eee;
+  /* DO NOT use width: 100vw or width: 1000px here */
+  width: 100%; 
+  max-width: 350px; /* This limits the size so others can fit next to it */
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
+  border: 1px solid #eee;
 }
 
 .card:hover {
