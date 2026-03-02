@@ -10,7 +10,6 @@ const theme = useThemeStore()
 const router = useRouter()
 cart.load()
 auth.loadSavedAuth()
-theme.loadTheme()
 
 const goToHome = () => {
   router.push('/')
@@ -35,10 +34,10 @@ const login = () => {
     <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
       <!-- Logo -->
       <button @click="goToHome" class="flex items-center gap-2 hover:opacity-90 transition group">
-        <span class="text-3xl group-hover:scale-110 transition">⚡</span>
+        <span class="text-3xl group-hover:scale-110 transition">🛍️</span>
         <div>
-          <h1 class="text-2xl font-bold text-white">ElectroHub</h1>
-          <p class="text-blue-100 dark:text-blue-300 text-xs">Premium Components</p>
+          <h1 class="text-2xl font-bold text-white">ShopHub</h1>
+          <p class="text-blue-100 dark:text-blue-300 text-xs">Your Favorite Store</p>
         </div>
       </button>
 

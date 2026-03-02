@@ -7,8 +7,11 @@ import NavBar from '../components/NavBar.vue'
 const router = useRouter()
 const cart = useCartStore()
 
-const total = computed(() => {
-  return cart.items.reduce((sum, item) => sum + item.price, 0).toFixed(2)
+const selectedTotal = computed(() => {
+  return cart.items
+    .filter(item => cart.selectedIds.has(item.id))
+    .reduce((sum, item) => sum + item.price, 0)
+    .toFixed(2)
 })
 
 const goBack = () => {
@@ -26,7 +29,11 @@ const clearCart = () => {
 }
 
 const checkout = () => {
-  alert('Thank you for your purchase! This is a demo store.')
+  if (cart.selectedCount === 0) {
+    alert('Please select at least one item to checkout')
+    return
+  }
+  alert(`Thank you for your purchase of ${cart.selectedCount} item(s)! This is a demo store.`)
   cart.clear()
   router.push('/')
 }
@@ -61,14 +68,45 @@ const checkout = () => {
 
       <!-- Cart Items -->
       <div v-else class="space-y-6">
+        <!-- Select All Controls -->
+        <div class="bg-white dark:bg-gray-700 rounded-2xl shadow-xl p-4 flex justify-between items-center">
+          <span class="font-black text-gray-900 dark:text-white">
+            Selected: {{ cart.selectedCount }}/{{ cart.count }} items
+          </span>
+          <div class="flex gap-3">
+            <button
+              @click="cart.selectAll"
+              class="px-4 py-2 bg-indigo-600 dark:bg-indigo-700 text-white rounded-lg font-bold hover:bg-indigo-700 dark:hover:bg-indigo-800 transition-all duration-200"
+            >
+              Select All
+            </button>
+            <button
+              @click="cart.deselectAll"
+              class="px-4 py-2 bg-orange-600 dark:bg-orange-700 text-white rounded-lg font-bold hover:bg-orange-700 dark:hover:bg-orange-800 transition-all duration-200"
+            >
+              Deselect All
+            </button>
+          </div>
+        </div>
+
         <!-- Items List -->
         <div class="bg-white dark:bg-gray-700 rounded-2xl shadow-xl overflow-hidden">
           <div class="divide-y dark:divide-gray-600">
             <div
               v-for="item in cart.items"
               :key="item.id"
-              class="p-6 flex gap-6 hover:bg-indigo-50 dark:hover:bg-gray-600 transition-colors duration-200"
+              class="p-6 flex gap-6 hover:bg-indigo-50 dark:hover:bg-gray-600 transition-colors duration-200 items-start"
             >
+              <!-- Checkbox -->
+              <div class="flex items-center pt-4">
+                <input
+                  type="checkbox"
+                  :checked="cart.selectedIds.has(item.id)"
+                  @change="cart.toggleSelected(item.id)"
+                  class="w-5 h-5 rounded accent-indigo-600 dark:accent-indigo-400 cursor-pointer"
+                />
+              </div>
+
               <!-- Image -->
               <div class="bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-600 dark:to-gray-700 rounded-xl p-4 flex-shrink-0 hidden sm:flex items-center justify-center w-28 h-28">
                 <img
@@ -104,7 +142,7 @@ const checkout = () => {
             <div class="space-y-4 mb-6 pb-6 border-b-2 border-gray-200 dark:border-gray-600">
               <div class="flex justify-between text-lg">
                 <span class="font-semibold text-gray-700 dark:text-gray-300">Subtotal:</span>
-                <span class="font-black text-gray-900 dark:text-white">${{ total }}</span>
+                <span class="font-black text-gray-900 dark:text-white">${{ selectedTotal }}</span>
               </div>
               <div class="flex justify-between text-lg">
                 <span class="font-semibold text-gray-700 dark:text-gray-300">Shipping:</span>
@@ -112,12 +150,12 @@ const checkout = () => {
               </div>
               <div class="flex justify-between text-lg">
                 <span class="font-semibold text-gray-700 dark:text-gray-300">Tax (10%):</span>
-                <span class="font-black text-gray-900 dark:text-white">${{ (parseFloat(total) * 0.1).toFixed(2) }}</span>
+                <span class="font-black text-gray-900 dark:text-white">${{ (parseFloat(selectedTotal) * 0.1).toFixed(2) }}</span>
               </div>
             </div>
             <div class="flex justify-between items-center">
               <span class="text-2xl font-black text-gray-900 dark:text-white">Total:</span>
-              <span class="text-4xl font-black bg-gradient-to-r from-green-600 to-emerald-600 dark:from-green-400 dark:to-emerald-400 bg-clip-text text-transparent">${{ (parseFloat(total) * 1.1).toFixed(2) }}</span>
+              <span class="text-4xl font-black bg-gradient-to-r from-green-600 to-emerald-600 dark:from-green-400 dark:to-emerald-400 bg-clip-text text-transparent">${{ (parseFloat(selectedTotal) * 1.1).toFixed(2) }}</span>
             </div>
           </div>
 
@@ -125,9 +163,10 @@ const checkout = () => {
           <div class="space-y-3 flex flex-col">
             <button
               @click="checkout"
-              class="flex-grow bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 dark:from-indigo-700 dark:via-purple-700 dark:to-pink-700 text-white py-5 rounded-xl font-black text-lg hover:from-indigo-700 hover:via-purple-700 hover:to-pink-700 dark:hover:from-indigo-800 dark:hover:via-purple-800 dark:hover:to-pink-800 transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-105 active:scale-95"
+              :disabled="cart.selectedCount === 0"
+              class="flex-grow bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 dark:from-indigo-700 dark:via-purple-700 dark:to-pink-700 text-white py-5 rounded-xl font-black text-lg hover:from-indigo-700 hover:via-purple-700 hover:to-pink-700 dark:hover:from-indigo-800 dark:hover:via-purple-800 dark:hover:to-pink-800 transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:scale-100"
             >
-              💳 Checkout
+              💳 Checkout ({{ cart.selectedCount }})
             </button>
             <button
               @click="clearCart"
