@@ -34,23 +34,23 @@ watch(searchQuery, (val) => {
 <template>
   <NavBar />
 
-  <div class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+  <div class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 transition-colors duration-300">
     <!-- Hero Section -->
-    <div class="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-12 px-6 shadow-lg">
+    <div class="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 dark:from-indigo-900 dark:via-purple-900 dark:to-pink-900 text-white py-16 px-6 shadow-xl transition-colors duration-300">
       <div class="max-w-7xl mx-auto">
-        <h1 class="text-4xl md:text-5xl font-bold mb-2">Find Your Electronic Components</h1>
-        <p class="text-blue-100 text-lg">Browse our collection of premium electronic modules and circuits</p>
+        <h1 class="text-5xl md:text-6xl font-black mb-3 leading-tight">Discover Amazing Products</h1>
+        <p class="text-indigo-100 dark:text-indigo-200 text-xl md:text-2xl font-semibold">Find exactly what you're looking for with our massive collection</p>
       </div>
     </div>
 
     <!-- Search Section -->
     <div class="max-w-7xl mx-auto px-6 py-8">
-      <div class="relative">
+      <div class="relative group">
         <span class="absolute left-4 top-1/2 transform -translate-y-1/2 text-2xl">🔍</span>
         <input
           v-model="searchQuery"
-          placeholder="Search for resistors, LEDs, sensors..."
-          class="w-full pl-12 pr-4 py-3 border-2 border-gray-300 rounded-xl focus:outline-none focus:border-blue-600 transition text-lg shadow-md"
+          placeholder="Search anything you want..."
+          class="w-full pl-12 pr-6 py-4 border-2 border-gray-300 dark:border-gray-600 rounded-xl focus:outline-none focus:border-indigo-600 dark:focus:border-indigo-400 transition-all duration-300 text-lg shadow-md dark:bg-gray-700 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
         />
       </div>
     </div>
@@ -58,9 +58,14 @@ watch(searchQuery, (val) => {
     <!-- Products Section -->
     <div class="max-w-7xl mx-auto px-6 pb-12">
       <!-- Loading State -->
-      <div v-if="isLoading" class="flex flex-col items-center justify-center py-20">
-        <div class="animate-spin text-5xl mb-4">⚡</div>
-        <p class="text-gray-500 text-xl font-semibold">Loading products...</p>
+      <div v-if="isLoading" class="flex flex-col items-center justify-center py-32">
+        <div class="animate-bounce text-7xl mb-6">🛍️</div>
+        <p class="text-gray-600 dark:text-gray-300 text-2xl font-bold">Finding amazing products...</p>
+        <div class="mt-6 flex gap-2">
+          <div class="w-3 h-3 bg-indigo-600 rounded-full animate-bounce" style="animation-delay: 0s"></div>
+          <div class="w-3 h-3 bg-purple-600 rounded-full animate-bounce" style="animation-delay: 0.2s"></div>
+          <div class="w-3 h-3 bg-pink-600 rounded-full animate-bounce" style="animation-delay: 0.4s"></div>
+        </div>
       </div>
 
       <!-- Products Grid -->
@@ -73,8 +78,10 @@ watch(searchQuery, (val) => {
       </div>
 
       <!-- No Results -->
-      <div v-if="!isLoading && products.length === 0" class="text-center py-20">
-        <p class="text-gray-500 text-xl">No products found. Try a different search!</p>
+      <div v-if="!isLoading && products.length === 0" class="text-center py-32">
+        <div class="text-8xl mb-4">🔍</div>
+        <p class="text-gray-600 dark:text-gray-400 text-2xl font-bold mb-2">Nothing found</p>
+        <p class="text-gray-500 dark:text-gray-500">Try a different search term</p>
       </div>
     </div>
   </div>

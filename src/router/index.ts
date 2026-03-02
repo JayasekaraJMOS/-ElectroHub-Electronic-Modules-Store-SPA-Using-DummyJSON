@@ -2,14 +2,20 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import ProductDetailView from '../views/ProductDetailView.vue'
 import CartView from '../views/CartView.vue'
+import LoginView from '../views/LoginView.vue'
 
 const router = createRouter({
   history: createWebHistory(),
   routes: [
-    { path: '/', component: HomeView },
-    { path: '/product/:id', component: ProductDetailView },
-    { path: '/cart', component: CartView }
+    { path: '/login', component: LoginView, meta: { title: 'Login - ElectroHub' } },
+    { path: '/', component: HomeView, meta: { title: 'Home - ElectroHub' } },
+    { path: '/product/:id', component: ProductDetailView, meta: { title: 'Product Details - ElectroHub' } },
+    { path: '/cart', component: CartView, meta: { title: 'Shopping Cart - ElectroHub' } }
   ]
+})
+
+router.afterEach((to) => {
+  document.title = (to.meta.title as string) || 'ElectroHub'
 })
 
 export default router

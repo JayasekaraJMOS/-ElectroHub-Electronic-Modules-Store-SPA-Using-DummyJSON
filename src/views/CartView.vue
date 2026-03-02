@@ -35,25 +35,25 @@ const checkout = () => {
 <template>
   <NavBar />
 
-  <div class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-12 px-6">
+  <div class="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-850 transition-colors duration-300 py-12 px-6">
     <div class="max-w-4xl mx-auto">
       <!-- Header -->
       <button
         @click="goBack"
-        class="mb-6 flex items-center gap-2 text-blue-600 hover:text-blue-800 font-semibold transition"
+        class="mb-8 flex items-center gap-2 text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 font-bold transition-all hover:gap-4"
       >
         ← Back
       </button>
 
-      <h1 class="text-4xl font-bold text-gray-800 mb-8">Shopping Cart</h1>
+      <h1 class="text-5xl font-black text-gray-900 dark:text-white mb-8">Shopping Cart</h1>
 
       <!-- Empty Cart -->
-      <div v-if="cart.items.length === 0" class="text-center py-20 bg-white rounded-xl shadow-lg p-8">
-        <div class="text-6xl mb-4">🛒</div>
-        <p class="text-gray-600 text-xl font-semibold mb-6">Your cart is empty</p>
+      <div v-if="cart.items.length === 0" class="text-center py-32 bg-white dark:bg-gray-700 rounded-2xl shadow-xl p-12">
+        <div class="text-8xl mb-6 animate-bounce">🛒</div>
+        <p class="text-gray-700 dark:text-gray-200 text-2xl font-bold mb-8">Your cart is empty</p>
         <button
           @click="() => router.push('/')"
-          class="bg-blue-600 text-white px-8 py-3 rounded-lg font-bold hover:bg-blue-700 transition"
+          class="bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-700 dark:to-purple-700 text-white px-8 py-4 rounded-xl font-black text-lg hover:from-indigo-700 hover:to-purple-700 dark:hover:from-indigo-800 dark:hover:to-purple-800 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 active:scale-95"
         >
           Continue Shopping
         </button>
@@ -62,15 +62,15 @@ const checkout = () => {
       <!-- Cart Items -->
       <div v-else class="space-y-6">
         <!-- Items List -->
-        <div class="bg-white rounded-xl shadow-lg overflow-hidden">
-          <div class="divide-y">
+        <div class="bg-white dark:bg-gray-700 rounded-2xl shadow-xl overflow-hidden">
+          <div class="divide-y dark:divide-gray-600">
             <div
               v-for="item in cart.items"
               :key="item.id"
-              class="p-6 flex gap-6 hover:bg-gray-50 transition"
+              class="p-6 flex gap-6 hover:bg-indigo-50 dark:hover:bg-gray-600 transition-colors duration-200"
             >
               <!-- Image -->
-              <div class="bg-gray-100 rounded-lg p-4 flex-shrink-0 hidden sm:flex items-center justify-center w-24 h-24">
+              <div class="bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-600 dark:to-gray-700 rounded-xl p-4 flex-shrink-0 hidden sm:flex items-center justify-center w-28 h-28">
                 <img
                   :src="item.thumbnail"
                   :alt="item.title"
@@ -80,13 +80,13 @@ const checkout = () => {
 
               <!-- Details -->
               <div class="flex-grow">
-                <h3 class="font-bold text-lg text-gray-800 mb-2">{{ item.title }}</h3>
-                <p class="text-gray-600 text-sm mb-3 line-clamp-2">{{ item.description }}</p>
+                <h3 class="font-black text-lg text-gray-900 dark:text-white mb-2">{{ item.title }}</h3>
+                <p class="text-gray-600 dark:text-gray-400 text-sm mb-4 line-clamp-2">{{ item.description }}</p>
                 <div class="flex justify-between items-center">
-                  <p class="text-2xl font-bold text-green-600">${{ item.price }}</p>
+                  <p class="text-3xl font-black text-green-600 dark:text-green-400">${{ item.price }}</p>
                   <button
                     @click="removeItem(item.id)"
-                    class="text-red-600 hover:text-red-800 font-semibold transition"
+                    class="px-6 py-2 text-red-600 dark:text-red-400 hover:text-red-800 dark:hover:text-red-300 font-black transition-colors duration-200 hover:bg-red-100 dark:hover:bg-red-900/30 rounded-lg"
                   >
                     ✕ Remove
                   </button>
@@ -99,45 +99,45 @@ const checkout = () => {
         <!-- Cart Summary -->
         <div class="grid md:grid-cols-2 gap-6">
           <!-- Summary Card -->
-          <div class="bg-white rounded-xl shadow-lg p-6">
-            <h2 class="text-2xl font-bold text-gray-800 mb-4">Order Summary</h2>
-            <div class="space-y-3 mb-6 pb-6 border-b-2 border-gray-200">
-              <div class="flex justify-between text-gray-600">
-                <span>Subtotal:</span>
-                <span class="font-semibold">${{ total }}</span>
+          <div class="bg-white dark:bg-gray-700 rounded-2xl shadow-xl p-8">
+            <h2 class="text-3xl font-black text-gray-900 dark:text-white mb-6">Order Summary</h2>
+            <div class="space-y-4 mb-6 pb-6 border-b-2 border-gray-200 dark:border-gray-600">
+              <div class="flex justify-between text-lg">
+                <span class="font-semibold text-gray-700 dark:text-gray-300">Subtotal:</span>
+                <span class="font-black text-gray-900 dark:text-white">${{ total }}</span>
               </div>
-              <div class="flex justify-between text-gray-600">
-                <span>Shipping:</span>
-                <span class="font-semibold">FREE</span>
+              <div class="flex justify-between text-lg">
+                <span class="font-semibold text-gray-700 dark:text-gray-300">Shipping:</span>
+                <span class="font-black text-green-600 dark:text-green-400">FREE</span>
               </div>
-              <div class="flex justify-between text-gray-600">
-                <span>Tax (estimated):</span>
-                <span class="font-semibold">${{ (parseFloat(total) * 0.1).toFixed(2) }}</span>
+              <div class="flex justify-between text-lg">
+                <span class="font-semibold text-gray-700 dark:text-gray-300">Tax (10%):</span>
+                <span class="font-black text-gray-900 dark:text-white">${{ (parseFloat(total) * 0.1).toFixed(2) }}</span>
               </div>
             </div>
-            <div class="flex justify-between items-center mb-6">
-              <span class="text-xl font-bold text-gray-800">Total:</span>
-              <span class="text-3xl font-bold text-green-600">${{ (parseFloat(total) * 1.1).toFixed(2) }}</span>
+            <div class="flex justify-between items-center">
+              <span class="text-2xl font-black text-gray-900 dark:text-white\">Total:</span>
+              <span class=\"text-4xl font-black bg-gradient-to-r from-green-600 to-emerald-600 dark:from-green-400 dark:to-emerald-400 bg-clip-text text-transparent\">${{ (parseFloat(total) * 1.1).toFixed(2) }}</span>
             </div>
           </div>
 
           <!-- Actions -->
-          <div class="space-y-3 flex flex-col">
+          <div class=\"space-y-3 flex flex-col\">
             <button
-              @click="checkout"
-              class="flex-grow bg-gradient-to-r from-green-600 to-green-700 text-white py-4 rounded-lg font-bold text-lg hover:from-green-700 hover:to-green-800 transition shadow-lg"
+              @click=\"checkout\"
+              class=\"flex-grow bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 dark:from-indigo-700 dark:via-purple-700 dark:to-pink-700 text-white py-5 rounded-xl font-black text-lg hover:from-indigo-700 hover:via-purple-700 hover:to-pink-700 dark:hover:from-indigo-800 dark:hover:via-purple-800 dark:hover:to-pink-800 transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-105 active:scale-95\"
             >
               💳 Checkout
             </button>
             <button
-              @click="clearCart"
-              class="bg-red-600 text-white py-3 rounded-lg font-bold hover:bg-red-700 transition"
+              @click=\"clearCart\"
+              class=\"bg-red-600 dark:bg-red-700 text-white py-3 rounded-xl font-black hover:bg-red-700 dark:hover:bg-red-800 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 active:scale-95\"
             >
               🗑️ Clear Cart
             </button>
             <button
-              @click="() => router.push('/')"
-              class="bg-gray-600 text-white py-3 rounded-lg font-bold hover:bg-gray-700 transition"
+              @click=\"() => router.push('/')\"
+              class=\"bg-gray-600 dark:bg-gray-600 text-white py-3 rounded-xl font-black hover:bg-gray-700 dark:hover:bg-gray-700 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 active:scale-95\"
             >
               ← Continue Shopping
             </button>
