@@ -1,119 +1,64 @@
 <script setup lang="ts">
-// Props setup
-defineProps<{
-  product: any;
-}>();
+import { useRouter } from 'vue-router'
+import { useCartStore } from '../stores/cart'
+import type { Product } from '../types/Product'
+
+const props = defineProps<{
+  product: Product
+}>()
+
+const router = useRouter()
+const cart = useCartStore()
+
+const goToDetail = () => {
+  router.push(`/product/${props.product.id}`)
+}
+
+const getRating = (rating: number | undefined) => {
+  return rating ? rating.toFixed(1) : 'N/A'
+}
 </script>
 
 <template>
-  <div class="card">
-    <div class="image-box">
-      <img :src="product.thumbnail" :alt="product.title" loading="lazy" />
+  <div
+    class="bg-white rounded-xl shadow-md hover:shadow-2xl transition duration-300 overflow-hidden cursor-pointer group"
+    @click="goToDetail"
+  >
+    <!-- Image Container -->
+    <div class="relative bg-gradient-to-br from-gray-50 to-gray-100 h-48 flex items-center justify-center overflow-hidden group-hover:bg-gradient-to-br group-hover:from-blue-50 group-hover:to-blue-100 transition">
+      <img
+        :src="product.thumbnail"
+        class="h-40 w-40 object-contain group-hover:scale-110 transition duration-300"
+        :alt="product.title"
+      />
     </div>
-    <div class="card-info">
-      <h3 class="product-title">{{ product.title }}</h3>
-      <div class="price-row">
-        <span class="price">${{ product.price }}</span>
-        <span class="stock" v-if="product.stock < 10">Low Stock</span>
+
+    <div class="p-4">
+      <!-- Title -->
+      <h3 class="font-bold text-sm md:text-base line-clamp-2 text-gray-800 group-hover:text-blue-600 transition">{{ product.title }}</h3>
+      
+      <!-- Rating and Stock -->
+      <div class="flex justify-between items-center mt-2 text-xs text-gray-600">
+        <span v-if="product.rating" class="flex items-center gap-1">
+          <span>⭐</span>
+          <span class="font-semibold text-yellow-600">{{ getRating(product.rating) }}</span>
+        </span>
+        <span v-if="product.stock" class="text-green-600 font-semibold">In Stock</span>
       </div>
-      <button class="add-btn">Add to Project</button>
+
+      <!-- Price -->
+      <div class="mt-3 flex justify-between items-baseline gap-2">
+        <p class="text-2xl font-bold text-green-600">${{ product.price }}</p>
+        <p v-if="product.discountPercentage" class="text-xs text-red-600">-{{ product.discountPercentage }}%</p>
+      </div>
+
+      <!-- Add to Cart Button -->
+      <button
+        class="mt-4 w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-2 rounded-lg font-semibold hover:from-blue-700 hover:to-blue-800 transition duration-200 shadow-md hover:shadow-lg"
+        @click.stop="cart.add(product)"
+      >
+        🛒 Add to Cart
+      </button>
     </div>
   </div>
 </template>
-
-<style scoped>
-.card {
-  /* Uses the global CSS variables from App.vue */
-  background: var(--card-bg);
-  color: var(--text-color);
-  border-radius: 20px;
-  padding: 15px;
-  text-align: center;
-  border: 1px solid rgba(128, 128, 128, 0.1);
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-}
-
-.card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
-  border-color: var(--accent-color);
-}
-
-.image-box {
-  width: 100%;
-  height: 200px;
-  background: #ffffff; /* Keeps product backgrounds clean regardless of theme */
-  border-radius: 12px;
-  margin-bottom: 15px;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.image-box img {
-  width: 90%;
-  height: 90%;
-  object-fit: contain;
-  transition: transform 0.5s ease;
-}
-
-.card:hover .image-box img {
-  transform: scale(1.1);
-}
-
-.product-title {
-  font-size: 1.1rem;
-  margin: 10px 0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.price-row {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 15px;
-}
-
-.price {
-  font-size: 1.5rem;
-  font-weight: 800;
-  color: #2ecc71;
-}
-
-.stock {
-  font-size: 0.7rem;
-  background: #e74c3c;
-  color: white;
-  padding: 2px 8px;
-  border-radius: 10px;
-  text-transform: uppercase;
-}
-
-.add-btn {
-  width: 100%;
-  padding: 12px;
-  background: var(--accent-color);
-  color: white;
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-  font-weight: 600;
-  transition: filter 0.2s, transform 0.1s;
-}
-
-.add-btn:hover {
-  filter: brightness(1.1);
-}
-
-.add-btn:active {
-  transform: scale(0.98);
-}
-</style>
