@@ -48,30 +48,30 @@ const getRating = (rating: number | undefined) => {
           <span class="text-lg">⭐</span>
           <span class="font-bold text-yellow-700 dark:text-yellow-400">{{ getRating(product.rating) }}</span>
         </span>
-        <span v-if="product.stock" class=\"inline-flex items-center gap-1 text-green-600 dark:text-green-400 font-bold\">
-          <span class=\"text-lg\">✓</span>
+        <span v-if="product.stock" class="inline-flex items-center gap-1 text-green-600 dark:text-green-400 font-bold">
+          <span class="text-lg">✓</span>
           In Stock
         </span>
-        <span v-else class=\"inline-flex items-center gap-1 text-red-600 dark:text-red-400 font-bold\">
-          <span class=\"text-lg\">✗</span>
+        <span v-else class="inline-flex items-center gap-1 text-red-600 dark:text-red-400 font-bold">
+          <span class="text-lg">✗</span>
           Out
         </span>
       </div>
 
       <!-- Price Section -->
-      <div class=\"mt-4 mb-4 pb-4 border-b-2 border-gray-200 dark:border-gray-600\">
-        <div class=\"flex items-baseline gap-3\">
-          <p class=\"text-3xl font-black text-green-600 dark:text-green-400\">${{ product.price }}</p>
-          <p v-if=\"product.discountPercentage\" class=\"text-lg text-red-600 dark:text-red-400 font-bold line-through opacity-70\">-{{ product.discountPercentage }}%</p>
+      <div class="mt-4 mb-4 pb-4 border-b-2 border-gray-200 dark:border-gray-600">
+        <div class="flex items-baseline gap-3">
+          <p class="text-3xl font-black text-green-600 dark:text-green-400">${{ product.price }}</p>
+          <p v-if="product.discountPercentage" class="text-lg text-red-600 dark:text-red-400 font-bold line-through opacity-70">-{{ product.discountPercentage }}%</p>
         </div>
       </div>
 
       <!-- Add to Cart Button -->
       <button
-        class=\"w-full bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-700 dark:to-purple-700 text-white py-3 rounded-xl font-bold hover:from-indigo-700 hover:to-purple-700 dark:hover:from-indigo-800 dark:hover:to-purple-800 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 group/btn\"
-        @click.stop=\"cart.add(product)\"
+        class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-700 dark:to-purple-700 text-white py-3 rounded-xl font-bold hover:from-indigo-700 hover:to-purple-700 dark:hover:from-indigo-800 dark:hover:to-purple-800 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 group/btn"
+        @click.stop="cart.add(product)"
       >
-        <span class=\"group-hover/btn:scale-110 inline-block transition-transform\">🛒</span> Add to Cart
+        <span class="group-hover/btn:scale-110 inline-block transition-transform">🛒</span> Add to Cart
       </button>
     </div>
   </div>

@@ -36,8 +36,10 @@ const useDemoAccount = (user: string, pass: string) => {
       <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl p-8 space-y-6">
         <!-- Header -->
         <div class="text-center">
-        <h1 class="text-5xl font-black bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-2">🛍️ ShopHub</h1>
-        <p class="text-gray-600 dark:text-gray-300 text-lg font-semibold">Premium Products Store</p>
+          <h1 class="text-5xl font-black bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-2">🛍️ ShopHub</h1>
+          <p class="text-gray-600 dark:text-gray-300 text-lg font-semibold">Premium Products Store</p>
+        </div>
+
         <!-- Error Message -->
         <div v-if="auth.error" class="bg-red-100 border-l-4 border-red-600 p-4 rounded">
           <p class="text-red-800 font-semibold">{{ auth.error }}</p>

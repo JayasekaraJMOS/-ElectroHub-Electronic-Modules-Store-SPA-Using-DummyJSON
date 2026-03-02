@@ -116,28 +116,28 @@ const checkout = () => {
               </div>
             </div>
             <div class="flex justify-between items-center">
-              <span class="text-2xl font-black text-gray-900 dark:text-white\">Total:</span>
-              <span class=\"text-4xl font-black bg-gradient-to-r from-green-600 to-emerald-600 dark:from-green-400 dark:to-emerald-400 bg-clip-text text-transparent\">${{ (parseFloat(total) * 1.1).toFixed(2) }}</span>
+              <span class="text-2xl font-black text-gray-900 dark:text-white">Total:</span>
+              <span class="text-4xl font-black bg-gradient-to-r from-green-600 to-emerald-600 dark:from-green-400 dark:to-emerald-400 bg-clip-text text-transparent">${{ (parseFloat(total) * 1.1).toFixed(2) }}</span>
             </div>
           </div>
 
           <!-- Actions -->
-          <div class=\"space-y-3 flex flex-col\">
+          <div class="space-y-3 flex flex-col">
             <button
-              @click=\"checkout\"
-              class=\"flex-grow bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 dark:from-indigo-700 dark:via-purple-700 dark:to-pink-700 text-white py-5 rounded-xl font-black text-lg hover:from-indigo-700 hover:via-purple-700 hover:to-pink-700 dark:hover:from-indigo-800 dark:hover:via-purple-800 dark:hover:to-pink-800 transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-105 active:scale-95\"
+              @click="checkout"
+              class="flex-grow bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 dark:from-indigo-700 dark:via-purple-700 dark:to-pink-700 text-white py-5 rounded-xl font-black text-lg hover:from-indigo-700 hover:via-purple-700 hover:to-pink-700 dark:hover:from-indigo-800 dark:hover:via-purple-800 dark:hover:to-pink-800 transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-105 active:scale-95"
             >
               💳 Checkout
             </button>
             <button
-              @click=\"clearCart\"
-              class=\"bg-red-600 dark:bg-red-700 text-white py-3 rounded-xl font-black hover:bg-red-700 dark:hover:bg-red-800 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 active:scale-95\"
+              @click="clearCart"
+              class="bg-red-600 dark:bg-red-700 text-white py-3 rounded-xl font-black hover:bg-red-700 dark:hover:bg-red-800 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 active:scale-95"
             >
               🗑️ Clear Cart
             </button>
             <button
-              @click=\"() => router.push('/')\"
-              class=\"bg-gray-600 dark:bg-gray-600 text-white py-3 rounded-xl font-black hover:bg-gray-700 dark:hover:bg-gray-700 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 active:scale-95\"
+              @click="() => router.push('/')"
+              class="bg-gray-600 dark:bg-gray-600 text-white py-3 rounded-xl font-black hover:bg-gray-700 dark:hover:bg-gray-700 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 active:scale-95"
             >
               ← Continue Shopping
             </button>
