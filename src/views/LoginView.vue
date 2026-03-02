@@ -18,17 +18,33 @@ const handleLogin = async () => {
 }
 
 // Demo accounts from DummyJSON
-const demoAccounts = [
-  // updated with credentials currently documented by DummyJSON
-  { username: 'kminchelle', password: '0lelplR' },
-  { username: 'claudette09', password: 'ewRjLYr' } // second example
-]
+// demo functionality now generates a user programmatically
+const demoAccounts = [] // kept for structure but unused
 
-const useDemoAccount = async (user: string, pass: string) => {
-  username.value = user
-  password.value = pass
-  // automatically attempt login after filling
-  await handleLogin()
+const createDemoAccount = async () => {
+  // generate simple random credentials
+  const rand = Math.floor(Math.random() * 100000)
+  const user = `demo${rand}`
+  const pass = `Pass${rand}`
+  try {
+    const response = await fetch('https://dummyjson.com/users/add', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        username: user,
+        password: pass,
+        email: `${user}@example.com`,
+        firstName: 'Demo',
+        lastName: rand.toString()
+      })
+    })
+    if (!response.ok) throw new Error('Failed to create demo account')
+    username.value = user
+    password.value = pass
+    await handleLogin()
+  } catch (e: any) {
+    auth.error = e.message || 'Demo creation failed'
+  }
 }
 </script>
 
@@ -91,30 +107,33 @@ const useDemoAccount = async (user: string, pass: string) => {
           >
             {{ auth.isLoading ? 'Logging in...' : 'Log In' }}
           </button>
+          <button
+            type="button"
+            @click="router.back()"
+            class="mt-2 w-full text-center text-sm text-gray-600 dark:text-gray-400 hover:underline"
+          >
+            ← Back
+          </button>
         </form>
 
-        <!-- Divider -->
+        <!-- Demo generation -->
         <div class="relative">
           <div class="absolute inset-0 flex items-center">
             <div class="w-full border-t border-gray-300 dark:border-gray-600"></div>
           </div>
           <div class="relative flex justify-center text-sm">
-            <span class="px-2 bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400">Demo Accounts</span>
+            <span class="px-2 bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400">Demo Account</span>
           </div>
         </div>
 
-        <!-- Demo Accounts -->
-        <div class="space-y-2">
-          <p class="text-xs text-gray-600 dark:text-gray-400 text-center">Click to use demo account:</p>
-          <div v-for="(account, index) in demoAccounts" :key="index" class="flex gap-2">
-            <button
-              type="button"
-              @click="useDemoAccount(account.username, account.password)"
-              class="flex-1 px-3 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded text-sm font-mono text-gray-700 dark:text-gray-200 transition"
-            >
-              {{ account.username }}
-            </button>
-          </div>
+        <div class="text-center">
+          <button
+            type="button"
+            @click="createDemoAccount"
+            class="w-full px-4 py-2 bg-indigo-600 text-white rounded-lg font-bold hover:bg-indigo-700 transition"
+          >
+            Create & Login Demo
+          </button>
         </div>
 
         <!-- Footer Note -->
