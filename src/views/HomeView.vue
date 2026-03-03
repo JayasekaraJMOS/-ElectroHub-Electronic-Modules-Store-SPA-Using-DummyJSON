@@ -101,7 +101,7 @@ const visibleFlashProducts = computed(() => {
           v-for="cat in categories" 
           :key="cat" 
           @click="selectCategory(cat)"
-          :class="['px-4 py-1 text-xs font-bold rounded-full transition-all border shrink-0', currentCategory === cat ? 'bg-[#ff6600] border-[#ff6600] text-white' : 'bg-transparent border-transparent text-[var(--text-muted)] hover:text-[#ff6600]']"
+          :class="['px-4 py-1 text-xs font-bold rounded-full transition-all border shrink-0', currentCategory === cat ? 'bg-[var(--accent-color)] border-[var(--accent-color)] text-white shadow-md' : 'bg-transparent border-transparent text-[var(--text-muted)] hover:text-[var(--accent-color)]']"
         >
           {{ cat.toUpperCase() }}
         </button>
@@ -113,21 +113,23 @@ const visibleFlashProducts = computed(() => {
       <div class="bg-[var(--card-bg)] rounded-sm border border-[var(--border-color)] overflow-hidden shadow-sm">
         <div class="flex items-center justify-between p-4 border-b border-[var(--border-color)]">
           <div class="flex items-center gap-6">
-            <h2 class="text-[#ff6600] font-bold uppercase text-sm">Flash Sale</h2>
+            <h2 class="text-[var(--promo-color)] font-black uppercase text-sm tracking-widest flex items-center gap-2">
+              <span class="animate-pulse">🔥</span> Flash Sale
+            </h2>
             <div class="flex items-center gap-2">
-              <span class="text-xs font-bold uppercase text-[var(--text-muted)]">Ending in</span>
-              <div class="flex gap-1.5">
-                <span class="bg-[#ff6600] text-white px-1.5 py-0.5 rounded-sm font-bold text-xs">{{ String(timeLeft.hours).padStart(2, '0') }}</span>
-                <span class="text-[#ff6600] font-bold">:</span>
-                <span class="bg-[#ff6600] text-white px-1.5 py-0.5 rounded-sm font-bold text-xs">{{ String(timeLeft.minutes).padStart(2, '0') }}</span>
-                <span class="text-[#ff6600] font-bold">:</span>
-                <span class="bg-[#ff6600] text-white px-1.5 py-0.5 rounded-sm font-bold text-xs">{{ String(timeLeft.seconds).padStart(2, '0') }}</span>
+              <span class="text-[10px] font-black uppercase text-[var(--text-muted)] tracking-tighter">Ending in</span>
+              <div class="flex gap-1">
+                <span class="bg-[var(--promo-color)] text-white px-1.5 py-0.5 rounded shadow-sm font-black text-xs">{{ String(timeLeft.hours).padStart(2, '0') }}</span>
+                <span class="text-[var(--promo-color)] font-black">:</span>
+                <span class="bg-[var(--promo-color)] text-white px-1.5 py-0.5 rounded shadow-sm font-black text-xs">{{ String(timeLeft.minutes).padStart(2, '0') }}</span>
+                <span class="text-[var(--promo-color)] font-black">:</span>
+                <span class="bg-[var(--promo-color)] text-white px-1.5 py-0.5 rounded shadow-sm font-black text-xs">{{ String(timeLeft.seconds).padStart(2, '0') }}</span>
               </div>
             </div>
           </div>
           <button 
             @click="toggleFlash"
-            class="text-[#ff6600] text-xs font-bold uppercase border border-[#ff6600] px-4 py-1.5 rounded-sm transition-all hover:bg-[#ff6600] hover:text-white"
+            class="text-[var(--accent-color)] text-xs font-black uppercase border-2 border-[var(--accent-color)] px-5 py-1.5 rounded-lg transition-all hover:bg-[var(--accent-color)] hover:text-white shadow-sm hover:shadow-md"
           >
             {{ isFlashExpanded ? 'Show Less' : 'Shop All' }}
           </button>
@@ -135,16 +137,16 @@ const visibleFlashProducts = computed(() => {
         
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-[1px] bg-[var(--border-color)] transition-all duration-500">
           <div v-for="item in visibleFlashProducts" :key="item.id" class="bg-[var(--card-bg)] p-4 group cursor-pointer hover:shadow-xl transition-all relative animate-fade-in">
-            <div class="absolute top-2 left-2 bg-[#ff6600] text-white text-[10px] font-bold px-1.5 py-0.5 rounded-sm z-10 shrink-0">
-              -{{ item.discount }}%
+            <div class="absolute top-2 left-2 bg-[var(--promo-color)] text-white text-[10px] font-black px-2 py-0.5 rounded shadow-lg z-10 shrink-0">
+              -{{ item.discount }}% OFF
             </div>
-            <div class="aspect-square mb-3 overflow-hidden rounded-sm bg-white p-2">
+            <div class="aspect-square mb-3 overflow-hidden rounded-xl bg-white p-3 shadow-inner">
               <img :src="item.thumbnail" class="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500" />
             </div>
-            <h4 class="text-xs font-bold text-gray-800 dark:text-gray-100 line-clamp-1 mb-1 truncate">{{ item.title }}</h4>
-            <div class="flex flex-col">
-              <span class="text-lg font-bold text-[#ff6600]">${{ item.price }}</span>
-              <span class="text-[10px] text-gray-400 line-through">${{ item.oldPrice }}</span>
+            <h4 class="text-xs font-bold text-[var(--text-color)] line-clamp-1 mb-1 truncate group-hover:text-[var(--accent-color)] transition-colors">{{ item.title }}</h4>
+            <div class="flex items-baseline gap-2">
+              <span class="text-lg font-black text-[var(--promo-color)]">${{ item.price }}</span>
+              <span class="text-[10px] text-[var(--text-muted)] line-through opacity-60">${{ item.oldPrice }}</span>
             </div>
           </div>
         </div>
@@ -153,18 +155,18 @@ const visibleFlashProducts = computed(() => {
 
     <!-- Classic Banner -->
     <section class="max-w-7xl mx-auto px-4 mt-8">
-      <div class="relative h-[240px] rounded-sm overflow-hidden bg-[#ff6600] shadow-sm group">
-        <div class="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent z-10"></div>
+      <div class="relative h-[280px] rounded-2xl overflow-hidden shadow-2xl group border-4 border-white/10">
+        <div class="absolute inset-0 bg-gradient-to-r from-[var(--bg-color)] via-[var(--bg-color)]/40 to-transparent z-10"></div>
         <img src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?auto=format&fit=crop&q=80&w=2000" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" />
-        <div class="relative z-20 h-full flex flex-col justify-center px-12 text-white">
-          <span class="text-xs font-bold uppercase tracking-widest mb-2 text-yellow-400">Limited Time Offer</span>
-          <h2 class="text-3xl md:text-5xl font-extrabold mb-4 leading-tight">THE REAL SALE <br/>IS FINALLY HERE</h2>
+        <div class="relative z-20 h-full flex flex-col justify-center px-16 text-[var(--text-color)]">
+          <span class="text-xs font-black uppercase tracking-[0.2em] mb-3 text-[var(--promo-color)] bg-[var(--promo-color)]/20 w-fit px-3 py-1 rounded-full">Limited Time Offer</span>
+          <h2 class="text-4xl md:text-6xl font-black mb-6 leading-none tracking-tight">THE REAL SALE <br/><span class="text-[var(--accent-color)]">IS FINALLY HERE</span></h2>
           <button 
             @click="scrollToProducts"
-            class="group/btn w-fit px-8 py-3 bg-[#ff6600] hover:bg-white hover:text-[#ff6600] text-white font-bold rounded-sm transition-all shadow-lg transform active:scale-95 flex items-center gap-2"
+            class="group/btn w-fit px-10 py-4 bg-[var(--cta-color)] hover:bg-[var(--cta-hover)] text-white font-black rounded-xl transition-all shadow-xl transform active:scale-95 flex items-center gap-3 uppercase tracking-widest text-sm"
           >
             SHOP NOW
-            <span class="transition-transform group-hover/btn:translate-x-1 font-black text-lg">→</span>
+            <span class="transition-transform group-hover/btn:translate-x-2 text-xl">→</span>
           </button>
         </div>
       </div>
@@ -199,7 +201,7 @@ const visibleFlashProducts = computed(() => {
   </main>
 
   <!-- Footer -->
-  <footer class="bg-[#222] text-[#ccc] py-12 mt-12 border-t-4 border-[#ff6600]">
+  <footer class="bg-[var(--bg-color)] text-[var(--text-color)] py-16 mt-16 border-t-8 border-[var(--accent-color)]">
     <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-12 text-sm">
       <div class="space-y-4">
         <h4 class="text-white font-bold uppercase">Customer Care</h4>

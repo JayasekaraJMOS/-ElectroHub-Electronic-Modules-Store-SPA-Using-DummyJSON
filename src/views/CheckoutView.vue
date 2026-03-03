@@ -65,58 +65,58 @@ const placeOrder = () => {
     <div class="max-w-4xl mx-auto">
       <button
         @click="router.back()"
-        class="mb-8 flex items-center gap-2 text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 font-bold transition-all hover:gap-4"
+        class="mb-8 flex items-center gap-2 text-[var(--accent-color)] hover:text-blue-800 dark:hover:text-blue-300 font-bold transition-all hover:gap-4 uppercase tracking-widest text-xs"
       >
-        ← Back
+        ← Back to Store
       </button>
 
-      <h1 class="text-4xl font-black text-gray-900 dark:text-white mb-8">Checkout</h1>
+      <h1 class="text-5xl font-black text-[var(--text-color)] mb-12 tracking-tighter">Secure Checkout</h1>
 
       <div class="grid md:grid-cols-2 gap-8">
         <!-- form -->
         <div class="space-y-6">
           <!-- Step Indicator -->
-          <div class="flex items-center gap-4 mb-8">
-            <div :class="['flex items-center justify-center w-8 h-8 rounded-full font-bold transition-colors', currentStep >= 1 ? 'bg-indigo-600 text-white' : 'bg-gray-200 dark:bg-gray-700 text-gray-500']">1</div>
-            <div class="flex-1 h-1 bg-gray-200 dark:bg-gray-700 rounded-full">
-              <div :class="['h-full bg-indigo-600 rounded-full transition-all duration-500', currentStep > 1 ? 'w-full' : 'w-0']"></div>
+          <div class="flex items-center gap-4 mb-10">
+            <div :class="['flex items-center justify-center w-10 h-10 rounded-xl font-black transition-all shadow-md', currentStep >= 1 ? 'bg-[var(--accent-color)] text-white scale-110' : 'bg-gray-200 dark:bg-gray-700 text-gray-500']">1</div>
+            <div class="flex-1 h-1.5 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+              <div :class="['h-full bg-[var(--accent-color)] rounded-full transition-all duration-700 ease-out', currentStep > 1 ? 'w-full' : 'w-0']"></div>
             </div>
-            <div :class="['flex items-center justify-center w-8 h-8 rounded-full font-bold transition-colors', currentStep >= 2 ? 'bg-indigo-600 text-white' : 'bg-gray-200 dark:bg-gray-700 text-gray-500']">2</div>
+            <div :class="['flex items-center justify-center w-10 h-10 rounded-xl font-black transition-all shadow-md', currentStep >= 2 ? 'bg-[var(--accent-color)] text-white scale-110' : 'bg-gray-200 dark:bg-gray-700 text-gray-500']">2</div>
           </div>
 
           <!-- Step 1: Shipping -->
           <div v-if="currentStep === 1" class="space-y-6 animate-fade-in">
             <h2 class="text-2xl font-black text-gray-900 dark:text-white">Shipping Details</h2>
             <div>
-              <label class="block text-sm font-bold text-gray-700 dark:text-gray-200 mb-1">Name</label>
-              <input v-model="name" type="text" class="w-full px-4 py-2 border-2 border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:border-indigo-600 dark:focus:border-indigo-400 transition" placeholder="John Doe" required />
+              <label class="block text-xs font-black uppercase text-[var(--text-muted)] mb-2 tracking-widest">Full Name</label>
+              <input v-model="name" type="text" class="w-full px-5 py-3 border-2 border-[var(--border-color)] bg-[var(--card-bg)] rounded-xl focus:outline-none focus:border-[var(--accent-color)] transition-all shadow-inner" placeholder="John Doe" required />
             </div>
             <div>
-              <label class="block text-sm font-bold text-gray-700 dark:text-gray-200 mb-1">Address</label>
-              <input v-model="address" type="text" class="w-full px-4 py-2 border-2 border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:border-indigo-600 dark:focus:border-indigo-400 transition" placeholder="123 Street Name" required />
+              <label class="block text-xs font-black uppercase text-[var(--text-muted)] mb-2 tracking-widest">Shipping Address</label>
+              <input v-model="address" type="text" class="w-full px-5 py-3 border-2 border-[var(--border-color)] bg-[var(--card-bg)] rounded-xl focus:outline-none focus:border-[var(--accent-color)] transition-all shadow-inner" placeholder="123 Street Name" required />
             </div>
             <div class="grid grid-cols-2 gap-4">
               <div>
-                <label class="block text-sm font-bold text-gray-700 dark:text-gray-200 mb-1">City</label>
-                <input v-model="city" type="text" class="w-full px-4 py-2 border-2 border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:border-indigo-600 dark:focus:border-indigo-400 transition" placeholder="Colombo" />
+                <label class="block text-xs font-black uppercase text-[var(--text-muted)] mb-2 tracking-widest">City</label>
+                <input v-model="city" type="text" class="w-full px-5 py-3 border-2 border-[var(--border-color)] bg-[var(--card-bg)] rounded-xl focus:outline-none focus:border-[var(--accent-color)] transition-all shadow-inner" placeholder="Colombo" />
               </div>
               <div>
-                <label class="block text-sm font-bold text-gray-700 dark:text-gray-200 mb-1">Postal Code</label>
-                <input v-model="postal" type="text" class="w-full px-4 py-2 border-2 border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:border-indigo-600 dark:focus:border-indigo-400 transition" placeholder="10115" />
+                <label class="block text-xs font-black uppercase text-[var(--text-muted)] mb-2 tracking-widest">Zip Code</label>
+                <input v-model="postal" type="text" class="w-full px-5 py-3 border-2 border-[var(--border-color)] bg-[var(--card-bg)] rounded-xl focus:outline-none focus:border-[var(--accent-color)] transition-all shadow-inner" placeholder="10115" />
               </div>
             </div>
             <div>
-              <label class="block text-sm font-bold text-gray-700 dark:text-gray-200 mb-1">Country</label>
-              <select v-model="country" class="w-full px-4 py-2 border-2 border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:border-indigo-600 dark:focus:border-indigo-400 transition bg-white dark:bg-gray-800 text-gray-900 dark:text-white" required>
+              <label class="block text-xs font-black uppercase text-[var(--text-muted)] mb-2 tracking-widest">Country</label>
+              <select v-model="country" class="w-full px-5 py-3 border-2 border-[var(--border-color)] bg-[var(--card-bg)] rounded-xl focus:outline-none focus:border-[var(--accent-color)] transition-all bg-[var(--card-bg)] text-[var(--text-color)] shadow-inner font-bold" required>
                 <option value="" disabled>Select your country</option>
                 <option v-for="c in countries" :key="c" :value="c">{{ c }}</option>
               </select>
             </div>
             <button
               @click="nextStep"
-              class="w-full bg-gradient-to-r from-indigo-600 to-indigo-700 text-white py-3 rounded-xl font-bold hover:shadow-lg transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
+              class="w-full bg-[var(--accent-color)] text-white py-4 rounded-xl font-black uppercase tracking-widest shadow-xl shadow-[var(--accent-color)]/20 transition-all hover:bg-[#1D4ED8] hover:scale-[1.02] active:scale-[0.98]"
             >
-              Continue to Payment
+              Secure Payment 🔒
             </button>
           </div>
 
@@ -124,74 +124,81 @@ const placeOrder = () => {
           <div v-if="currentStep === 2" class="space-y-6 animate-fade-in">
             <h2 class="text-2xl font-black text-gray-900 dark:text-white">Payment Method</h2>
             <div class="grid gap-4">
-              <label class="flex items-center gap-4 p-4 border-2 rounded-xl cursor-pointer transition-all duration-300" 
-                :class="paymentMethod === 'credit-card' ? 'border-indigo-600 bg-indigo-50 dark:bg-indigo-900/20' : 'border-gray-300 dark:border-gray-600 hover:border-indigo-400'">
-                <input type="radio" v-model="paymentMethod" value="credit-card" class="w-5 h-5 accent-indigo-600" />
+              <label class="flex items-center gap-4 p-5 border-2 rounded-2xl cursor-pointer transition-all duration-500 shadow-sm" 
+                :class="paymentMethod === 'credit-card' ? 'border-[var(--accent-color)] bg-[var(--accent-color)]/5 ring-2 ring-[var(--accent-color)]/20 shadow-lg' : 'border-[var(--border-color)] bg-[var(--card-bg)] hover:border-[var(--accent-color)]/50'">
+                <input type="radio" v-model="paymentMethod" value="credit-card" class="w-5 h-5 accent-[var(--accent-color)]" />
                 <div class="flex-1">
-                  <div class="font-bold text-gray-900 dark:text-white">Credit Card</div>
-                  <div class="text-sm text-gray-500 dark:text-gray-400">Pay securely with Visa or Mastercard</div>
+                  <div class="font-black text-[var(--text-color)] uppercase tracking-tight">Credit Card</div>
+                  <div class="text-[10px] text-[var(--text-muted)] font-bold uppercase tracking-widest">Safe & Secure Payment</div>
                 </div>
-                <div class="text-2xl">💳</div>
+                <div class="text-3xl">💳</div>
               </label>
               
-              <label class="flex items-center gap-4 p-4 border-2 rounded-xl cursor-pointer transition-all duration-300" 
-                :class="paymentMethod === 'paypal' ? 'border-indigo-600 bg-indigo-50 dark:bg-indigo-900/20' : 'border-gray-300 dark:border-gray-600 hover:border-indigo-400'">
-                <input type="radio" v-model="paymentMethod" value="paypal" class="w-5 h-5 accent-indigo-600" />
+              <label class="flex items-center gap-4 p-5 border-2 rounded-2xl cursor-pointer transition-all duration-500 shadow-sm" 
+                :class="paymentMethod === 'paypal' ? 'border-[var(--accent-color)] bg-[var(--accent-color)]/5 ring-2 ring-[var(--accent-color)]/20 shadow-lg' : 'border-[var(--border-color)] bg-[var(--card-bg)] hover:border-[var(--accent-color)]/50'">
+                <input type="radio" v-model="paymentMethod" value="paypal" class="w-5 h-5 accent-[var(--accent-color)]" />
                 <div class="flex-1">
-                  <div class="font-bold text-gray-900 dark:text-white">PayPal</div>
-                  <div class="text-sm text-gray-500 dark:text-gray-400">Fast and secure with PayPal account</div>
+                  <div class="font-black text-[var(--text-color)] uppercase tracking-tight">PayPal</div>
+                  <div class="text-[10px] text-[var(--text-muted)] font-bold uppercase tracking-widest">One-click experience</div>
                 </div>
-                <div class="text-2xl">🌍</div>
+                <div class="text-3xl">🌍</div>
               </label>
-
-              <label class="flex items-center gap-4 p-4 border-2 rounded-xl cursor-pointer transition-all duration-300" 
-                :class="paymentMethod === 'cod' ? 'border-indigo-600 bg-indigo-50 dark:bg-indigo-900/20' : 'border-gray-300 dark:border-gray-600 hover:border-indigo-400'">
-                <input type="radio" v-model="paymentMethod" value="cod" class="w-5 h-5 accent-indigo-600" />
+ 
+              <label class="flex items-center gap-4 p-5 border-2 rounded-2xl cursor-pointer transition-all duration-500 shadow-sm" 
+                :class="paymentMethod === 'cod' ? 'border-[var(--accent-color)] bg-[var(--accent-color)]/5 ring-2 ring-[var(--accent-color)]/20 shadow-lg' : 'border-[var(--border-color)] bg-[var(--card-bg)] hover:border-[var(--accent-color)]/50'">
+                <input type="radio" v-model="paymentMethod" value="cod" class="w-5 h-5 accent-[var(--accent-color)]" />
                 <div class="flex-1">
-                  <div class="font-bold text-gray-900 dark:text-white">Cash on Delivery</div>
-                  <div class="text-sm text-gray-500 dark:text-gray-400">Pay when your order arrives</div>
+                  <div class="font-black text-[var(--text-color)] uppercase tracking-tight">Cash on Delivery</div>
+                  <div class="text-[10px] text-[var(--text-muted)] font-bold uppercase tracking-widest">Pay at your doorstep</div>
                 </div>
-                <div class="text-2xl">💵</div>
+                <div class="text-3xl">💵</div>
               </label>
             </div>
             
-            <div class="flex gap-4 pt-4">
+            <div class="flex gap-4 pt-6">
               <button
                 @click="prevStep"
-                class="flex-1 border-2 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 py-3 rounded-xl font-bold hover:bg-gray-100 dark:hover:bg-gray-800 transition-all"
+                class="flex-1 border-2 border-[var(--border-color)] text-[var(--text-muted)] py-4 rounded-xl font-black uppercase tracking-widest text-xs hover:bg-gray-100 dark:hover:bg-gray-800 transition-all shadow-sm"
               >
                 Back
               </button>
               <button
                 @click="placeOrder"
-                class="flex-[2] bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-700 dark:to-purple-700 text-white py-3 rounded-xl font-bold hover:from-indigo-700 hover:to-purple-700 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-[0.98]"
+                class="flex-[2] bg-[var(--cta-color)] hover:bg-[var(--cta-hover)] text-white py-4 rounded-xl font-black uppercase tracking-[0.2em] text-xs transition-all duration-500 shadow-2xl shadow-[var(--cta-color)]/40 hover:scale-[1.05] active:scale-95"
               >
-                Place Order (${{ total }})
+                Complete Payment (${{ total }})
               </button>
             </div>
           </div>
         </div>
 
         <!-- summary -->
-        <div class="bg-white dark:bg-gray-700 rounded-2xl shadow-xl p-8">
-          <h2 class="text-2xl font-black text-gray-900 dark:text-white mb-4">Order Summary</h2>
-          <ul class="space-y-4">
-            <li v-for="item in selectedItems" :key="item.id" class="flex justify-between">
-              <span>{{ item.title }}</span>
-              <span>${{ item.price.toFixed(2) }}</span>
+        <div class="bg-[var(--card-bg)] rounded-2xl shadow-2xl p-8 border border-[var(--border-color)] relative h-fit">
+          <div class="absolute top-0 left-0 w-full h-1 bg-[var(--accent-color)]"></div>
+          <h2 class="text-xs font-black text-[var(--text-muted)] mb-8 uppercase tracking-[0.2em]">Purchase Details</h2>
+          <ul class="space-y-6">
+            <li v-for="item in selectedItems" :key="item.id" class="flex justify-between items-center gap-4">
+              <div class="flex items-center gap-3 min-w-0">
+                <div class="w-10 h-10 bg-white p-1 rounded-lg border border-[var(--border-color)] shrink-0">
+                  <img :src="item.thumbnail" class="w-full h-full object-contain" />
+                </div>
+                <span class="text-xs font-bold text-[var(--text-color)] truncate uppercase tracking-tighter">{{ item.title }}</span>
+              </div>
+              <span class="text-sm font-black text-[var(--promo-color)] shrink-0">${{ item.price.toFixed(2) }}</span>
             </li>
           </ul>
-          <div class="mt-6 border-t border-gray-200 dark:border-gray-600 pt-4 space-y-2">
-            <div class="flex justify-between">
+          <div class="mt-8 border-t border-[var(--border-color)] pt-6 space-y-4">
+            <div class="flex justify-between text-xs font-bold uppercase text-[var(--text-muted)]">
               <span>Subtotal</span>
-              <span>${{ subtotal.toFixed(2) }}</span>
+              <span class="text-[var(--text-color)]">${{ subtotal.toFixed(2) }}</span>
             </div>
-            <div class="flex justify-between">
-              <span>Tax (10%)</span>
-              <span>${{ tax.toFixed(2) }}</span>
+            <div class="flex justify-between text-xs font-bold uppercase text-[var(--text-muted)]">
+              <span>Service Tax</span>
+              <span class="text-[var(--text-color)]">${{ tax.toFixed(2) }}</span>
             </div>
-            <div class="flex justify-between font-black text-lg">
-              <span>Total</span>
+            <div class="h-1 bg-dashed border-t-2 border-dashed border-[var(--border-color)] my-2"></div>
+            <div class="flex justify-between font-black text-2xl tracking-tighter text-[var(--promo-color)]">
+              <span class="uppercase text-xs self-center text-[var(--text-color)] tracking-widest">Total Pay</span>
               <span>${{ total.toFixed(2) }}</span>
             </div>
           </div>

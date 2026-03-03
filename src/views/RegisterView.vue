@@ -50,68 +50,68 @@ const handleRegister = async () => {
     <div class="flex-grow flex items-center justify-center p-6 text-[var(--text-color)]">
       <div class="w-full max-w-md bg-[var(--card-bg)] border border-[var(--border-color)] rounded-sm shadow-sm overflow-hidden">
         <div class="p-8">
-          <div class="text-center mb-8">
-            <h1 class="text-2xl font-bold text-gray-900 dark:text-white uppercase tracking-tight">Create Account</h1>
-            <p class="text-xs text-gray-500 font-bold mt-2 uppercase">Join OnlineStore today</p>
+          <div class="text-center mb-10">
+            <h1 class="text-4xl font-black text-[var(--text-color)] tracking-tighter uppercase">Sign Up</h1>
+            <p class="text-[10px] text-[var(--text-muted)] font-black mt-2 uppercase tracking-[0.2em]">Join the community today</p>
           </div>
 
-          <div v-if="error" class="mb-6 p-3 bg-red-50 border border-red-200 text-red-600 text-xs font-bold rounded-sm">
-            {{ error }}
+          <div v-if="error" class="mb-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-900/40 text-red-600 dark:text-red-400 text-[10px] font-black uppercase rounded-xl shadow-sm animate-fade-in text-center">
+            ⚠️ {{ error }}
           </div>
 
           <form @submit.prevent="handleRegister" class="space-y-4">
             <div class="grid grid-cols-2 gap-4">
               <div class="space-y-1">
-                <label class="text-[10px] font-bold text-gray-400 uppercase">First Name</label>
+                <label class="text-[10px] font-black text-[var(--text-muted)] uppercase tracking-widest pl-1">First Name</label>
                 <input
                   v-model="firstName"
                   type="text"
                   placeholder="John"
-                  class="w-full border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 px-4 py-2 text-sm rounded-sm outline-none focus:border-[#ff6600] transition-colors dark:text-white"
+                  class="w-full border-2 border-[var(--border-color)] bg-[var(--card-bg)] px-5 py-3 text-sm rounded-xl outline-none focus:border-[var(--accent-color)] transition-all dark:text-white shadow-inner"
                   required
                 />
               </div>
               <div class="space-y-1">
-                <label class="text-[10px] font-bold text-gray-400 uppercase">Last Name</label>
+                <label class="text-[10px] font-black text-[var(--text-muted)] uppercase tracking-widest pl-1">Last Name</label>
                 <input
                   v-model="lastName"
                   type="text"
                   placeholder="Doe"
-                  class="w-full border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 px-4 py-2 text-sm rounded-sm outline-none focus:border-[#ff6600] transition-colors dark:text-white"
+                  class="w-full border-2 border-[var(--border-color)] bg-[var(--card-bg)] px-5 py-3 text-sm rounded-xl outline-none focus:border-[var(--accent-color)] transition-all dark:text-white shadow-inner"
                   required
                 />
               </div>
             </div>
 
             <div class="space-y-1">
-              <label class="text-[10px] font-bold text-gray-400 uppercase">Username</label>
+              <label class="text-[10px] font-black text-[var(--text-muted)] uppercase tracking-widest pl-1">Username</label>
               <input
                 v-model="username"
                 type="text"
                 placeholder="johndoe123"
-                class="w-full border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 px-4 py-2 text-sm rounded-sm outline-none focus:border-[#ff6600] transition-colors dark:text-white"
+                class="w-full border-2 border-[var(--border-color)] bg-[var(--card-bg)] px-5 py-3 text-sm rounded-xl outline-none focus:border-[var(--accent-color)] transition-all dark:text-white shadow-inner"
                 required
               />
             </div>
 
             <div class="space-y-1">
-              <label class="text-[10px] font-bold text-gray-400 uppercase">Email</label>
+              <label class="text-[10px] font-black text-[var(--text-muted)] uppercase tracking-widest pl-1">Email</label>
               <input
                 v-model="email"
                 type="email"
                 placeholder="john@example.com"
-                class="w-full border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 px-4 py-2 text-sm rounded-sm outline-none focus:border-[#ff6600] transition-colors dark:text-white"
+                class="w-full border-2 border-[var(--border-color)] bg-[var(--card-bg)] px-5 py-3 text-sm rounded-xl outline-none focus:border-[var(--accent-color)] transition-all dark:text-white shadow-inner"
                 required
               />
             </div>
 
             <div class="space-y-1">
-              <label class="text-[10px] font-bold text-gray-400 uppercase">Password</label>
+              <label class="text-[10px] font-black text-[var(--text-muted)] uppercase tracking-widest pl-1">Password</label>
               <input
                 v-model="password"
                 type="password"
                 placeholder="••••••••"
-                class="w-full border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 px-4 py-2 text-sm rounded-sm outline-none focus:border-[#ff6600] transition-colors dark:text-white"
+                class="w-full border-2 border-[var(--border-color)] bg-[var(--card-bg)] px-5 py-3 text-sm rounded-xl outline-none focus:border-[var(--accent-color)] transition-all dark:text-white shadow-inner"
                 required
               />
             </div>
@@ -119,16 +119,16 @@ const handleRegister = async () => {
             <button
               type="submit"
               :disabled="isLoading"
-              class="w-full bg-[#ff6600] hover:bg-[#e65c00] text-white font-bold py-3 rounded-sm transition disabled:opacity-50 uppercase text-xs mt-4"
+              class="w-full bg-[var(--accent-color)] hover:bg-[#1D4ED8] text-white font-black py-4 rounded-xl transition-all shadow-xl shadow-[var(--accent-color)]/20 uppercase text-xs tracking-[0.2em] active:scale-95 disabled:opacity-50 mt-4"
             >
-              {{ isLoading ? 'Initializing...' : 'Sign Up' }}
+              {{ isLoading ? 'Creating...' : 'Sign Up' }}
             </button>
           </form>
 
-          <div class="mt-8 pt-8 border-t border-gray-100 dark:border-gray-800 text-center">
-            <p class="text-xs text-gray-500 font-bold uppercase">
+          <div class="mt-10 pt-8 border-t border-[var(--border-color)] text-center">
+            <p class="text-[10px] text-[var(--text-muted)] font-black uppercase tracking-widest">
               Already have an account? 
-              <button @click="router.push('/login')" class="text-[#ff6600] hover:underline">Login Here</button>
+              <button @click="router.push('/login')" class="text-[var(--accent-color)] hover:underline">Login Here</button>
             </p>
           </div>
         </div>

@@ -17,38 +17,45 @@ const goToDetail = () => {
 
 <template>
   <div
-    class="bg-[var(--card-bg)] border border-[var(--border-color)] rounded-md overflow-hidden transition-all duration-300 hover:shadow-lg cursor-pointer"
+    class="group bg-[var(--card-bg)] border border-[var(--border-color)] rounded-2xl overflow-hidden transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 cursor-pointer flex flex-col h-full"
     @click="goToDetail"
   >
     <!-- Image -->
-    <div class="aspect-square bg-[#f9f9f9] dark:bg-gray-900 flex items-center justify-center p-2">
+    <div class="aspect-square bg-white dark:bg-slate-800 flex items-center justify-center p-4 overflow-hidden relative">
       <img
         :src="product.thumbnail"
-        class="w-full h-full object-contain"
+        class="w-full h-full object-contain group-hover:scale-110 transition-transform duration-700"
         :alt="product.title"
       />
+      <div v-if="product.discountPercentage" class="absolute top-3 right-3 bg-[var(--promo-color)] text-white text-[10px] font-black px-2 py-1 rounded-lg shadow-lg">
+        -{{ Math.round(product.discountPercentage) }}%
+      </div>
     </div>
 
     <!-- Info -->
-    <div class="p-4 space-y-2">
-      <h4 class="text-sm font-bold text-gray-800 dark:text-gray-100 line-clamp-2 min-h-[40px]">
+    <div class="p-5 flex flex-col flex-grow bg-gradient-to-b from-white to-slate-50 dark:from-slate-800 dark:to-slate-900">
+      <h4 class="text-sm font-bold text-[var(--text-color)] line-clamp-2 min-h-[40px] mb-2 group-hover:text-[var(--accent-color)] transition-colors">
         {{ product.title }}
       </h4>
       
-      <div class="flex flex-col">
-        <span class="text-xl font-bold text-[#ff6600]">${{ product.price }}</span>
-        <div class="flex items-center gap-1 mt-1">
-          <span class="text-yellow-400 text-xs">★</span>
-          <span class="text-xs text-gray-500">{{ product.rating?.toFixed(1) }}</span>
+      <div class="mt-auto space-y-3">
+        <div class="flex items-center justify-between">
+          <div class="flex flex-col">
+            <span class="text-xl font-black text-[var(--promo-color)] tracking-tight">${{ product.price }}</span>
+            <div class="flex items-center gap-1 mt-0.5">
+              <span class="text-amber-400 text-xs text-shadow-sm">★</span>
+              <span class="text-[10px] font-bold text-[var(--text-muted)] uppercase tracking-tighter">{{ product.rating?.toFixed(1) }} Rating</span>
+            </div>
+          </div>
         </div>
-      </div>
 
-      <button 
-        @click.stop="cart.add(product)"
-        class="w-full mt-2 py-1.5 bg-[#ff6600] hover:bg-[#e65c00] text-white text-xs font-bold rounded transition-colors uppercase"
-      >
-        Add to Cart
-      </button>
+        <button 
+          @click.stop="cart.add(product)"
+          class="w-full py-3 bg-[var(--cta-color)] hover:bg-[var(--cta-hover)] text-white text-xs font-black rounded-xl transition-all uppercase tracking-widest shadow-lg hover:shadow-[var(--cta-color)]/20 transform active:scale-95"
+        >
+          Add to Cart
+        </button>
+      </div>
     </div>
   </div>
 </template>

@@ -39,7 +39,7 @@ const addToCart = () => {
     <!-- Breadcrumbs -->
     <div class="max-w-7xl mx-auto px-4 py-4">
       <div class="flex items-center gap-2 text-xs text-gray-500 font-bold uppercase tracking-tight">
-        <button @click="router.push('/')" class="hover:text-[#ff6600]">Home</button>
+        <button @click="router.push('/')" class="hover:text-[var(--accent-color)] transition-colors">Home</button>
         <span>/</span>
         <span class="text-gray-400 capitalize">{{ product?.category }}</span>
         <span>/</span>
@@ -49,22 +49,22 @@ const addToCart = () => {
 
     <!-- Loading State -->
     <div v-if="isLoading" class="flex items-center justify-center min-h-[60vh]">
-      <div class="w-12 h-12 border-4 border-[#ff6600]/20 border-t-[#ff6600] rounded-full animate-spin"></div>
+      <div class="w-12 h-12 border-4 border-[var(--accent-color)]/20 border-t-[var(--accent-color)] rounded-full animate-spin"></div>
     </div>
 
     <!-- Product Content -->
     <div v-else-if="product" class="max-w-7xl mx-auto px-4 grid md:grid-cols-2 gap-6 items-start">
       <!-- Left: Image -->
-      <div class="bg-[var(--card-bg)] border border-[var(--border-color)] p-8 rounded-sm shadow-sm md:sticky md:top-24">
+      <div class="bg-[var(--card-bg)] border border-[var(--border-color)] p-8 rounded-2xl shadow-xl md:sticky md:top-24">
         <img
           :src="product.thumbnail"
           :alt="product.title"
-          class="w-full h-auto object-contain max-h-[500px]"
+          class="w-full h-auto object-contain max-h-[500px] hover:scale-110 transition-transform duration-700"
         />
         
         <!-- Small Images Mockup -->
-        <div class="flex gap-4 mt-8 justify-center opacity-60">
-           <div v-for="i in 3" :key="i" class="w-16 h-16 border border-gray-200 dark:border-gray-800 p-1 bg-gray-50 dark:bg-gray-900 rounded-sm cursor-pointer hover:border-[#ff6600]">
+        <div class="flex gap-4 mt-8 justify-center opacity-40">
+           <div v-for="i in 3" :key="i" class="w-16 h-16 border-2 border-[var(--border-color)] p-1 bg-white dark:bg-slate-800 rounded-xl cursor-not-allowed hover:border-[var(--accent-color)] transition-all">
               <img :src="product.thumbnail" class="w-full h-full object-contain" />
            </div>
         </div>
@@ -72,42 +72,42 @@ const addToCart = () => {
 
       <!-- Right: Details -->
       <div class="space-y-6">
-        <div class="bg-[var(--card-bg)] border border-[var(--border-color)] p-8 rounded-sm shadow-sm">
-          <h1 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-4 line-clamp-2">
+        <div class="bg-[var(--card-bg)] border border-[var(--border-color)] p-8 rounded-2xl shadow-xl">
+          <h1 class="text-3xl md:text-5xl font-black text-[var(--text-color)] mb-4 tracking-tighter leading-none">
             {{ product.title }}
           </h1>
           
-          <div class="flex items-center gap-4 mb-6">
-             <div class="flex items-center gap-1">
-                <span class="text-yellow-400">★</span>
-                <span class="text-sm font-bold text-gray-600 dark:text-gray-400">{{ product.rating }}</span>
+          <div class="flex items-center gap-4 mb-8">
+             <div class="flex items-center gap-1 bg-amber-50 dark:bg-amber-900/20 px-3 py-1 rounded-full border border-amber-200">
+                <span class="text-amber-500 font-black">★</span>
+                <span class="text-sm font-black text-amber-700 dark:text-amber-400">{{ product.rating }}</span>
              </div>
-             <div class="h-4 w-px bg-gray-200 dark:bg-gray-800"></div>
-             <span class="text-xs font-bold text-blue-500 uppercase">1.2k+ Sold</span>
+             <div class="h-4 w-px bg-[var(--border-color)]"></div>
+             <span class="text-[10px] font-black text-[var(--accent-color)] uppercase tracking-widest bg-[var(--accent-color)]/10 px-3 py-1 rounded-full border border-[var(--accent-color)]/20 shadow-sm">Verified Seller</span>
           </div>
 
-          <div class="border-t border-b border-gray-100 dark:border-gray-800 py-6 mb-8">
-             <div class="flex items-baseline gap-4">
-                <span class="text-4xl font-bold text-[#ff6600]">${{ product.price }}</span>
-                <span v-if="product.discountPercentage" class="text-lg text-gray-400 line-through">
-                   ${{ (product.price * (1 + product.discountPercentage/100)).toFixed(2) }}
-                </span>
-                <span v-if="product.discountPercentage" class="text-sm text-gray-900 dark:text-gray-200 bg-gray-100 dark:bg-gray-800 px-2 py-0.5 font-bold">
-                   -{{ Math.round(product.discountPercentage) }}%
-                </span>
+          <div class="bg-slate-50 dark:bg-slate-900/50 p-6 rounded-2xl border border-[var(--border-color)] mb-8">
+             <div class="flex items-center gap-4">
+                <span class="text-5xl font-black text-[var(--promo-color)] tracking-tighter">${{ product.price }}</span>
+                <div v-if="product.discountPercentage" class="flex flex-col">
+                  <span class="text-lg text-[var(--text-muted)] line-through opacity-50 font-bold">${{ (product.price * (1 + product.discountPercentage/100)).toFixed(2) }}</span>
+                  <span class="text-xs text-white bg-[var(--promo-color)] px-2 py-0.5 font-black rounded w-fit">SAVE {{ Math.round(product.discountPercentage) }}%</span>
+                </div>
              </div>
-             <p class="text-xs text-gray-400 font-bold mt-2 uppercase">Promotional Price Included</p>
+             <p class="text-[10px] text-[var(--text-muted)] font-black mt-3 uppercase tracking-[0.2em]">Limited duration offer. Price includes VAT.</p>
           </div>
 
-          <div class="grid grid-cols-2 gap-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
              <button
                @click="addToCart"
-               class="bg-[#ff6600] hover:bg-[#e65c00] text-white py-4 font-bold rounded-sm shadow-sm transition-transform active:scale-95 uppercase"
+               class="bg-[var(--accent-color)] hover:bg-[#1D4ED8] text-white py-5 font-black rounded-xl shadow-lg transition-all active:scale-95 uppercase tracking-widest text-sm flex items-center justify-center gap-2 group"
              >
                Add to Cart
+               <span class="opacity-0 group-hover:opacity-100 transition-opacity">🛒</span>
              </button>
-             <button class="bg-[#26abd4] hover:bg-[#1a90b5] text-white py-4 font-bold rounded-sm shadow-sm transition-transform active:scale-95 uppercase">
+             <button class="bg-[var(--cta-color)] hover:bg-[var(--cta-hover)] text-white py-5 font-black rounded-xl shadow-lg transition-all active:scale-95 uppercase tracking-widest text-sm flex items-center justify-center gap-2 group">
                Buy Now
+               <span class="animate-bounce">⚡</span>
              </button>
           </div>
         </div>

@@ -54,37 +54,37 @@ const createDemoAccount = async () => {
     <div class="flex-grow flex items-center justify-center p-6 text-[var(--text-color)]">
       <div class="w-full max-w-md bg-[var(--card-bg)] border border-[var(--border-color)] rounded-sm shadow-sm overflow-hidden">
         <div class="p-8">
-          <div class="text-center mb-8">
-            <h1 class="text-2xl font-bold text-gray-900 dark:text-white uppercase tracking-tight">Login</h1>
-            <p class="text-xs text-gray-500 font-bold mt-2 uppercase">Welcome back to OnlineStore</p>
+          <div class="text-center mb-10">
+            <h1 class="text-4xl font-black text-[var(--text-color)] tracking-tighter uppercase">Welcome</h1>
+            <p class="text-[10px] text-[var(--text-muted)] font-black mt-2 uppercase tracking-[0.2em]">Enter your credentials to continue</p>
           </div>
 
-          <div v-if="auth.error" class="mb-6 p-3 bg-red-50 border border-red-200 text-red-600 text-xs font-bold rounded-sm">
-            {{ auth.error }}
+          <div v-if="auth.error" class="mb-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-900/40 text-red-600 dark:text-red-400 text-[10px] font-black uppercase rounded-xl shadow-sm animate-fade-in">
+            ⚠️ {{ auth.error }}
           </div>
 
           <form @submit.prevent="handleLogin" class="space-y-4">
             <div class="space-y-1">
-              <label class="text-[10px] font-bold text-gray-400 uppercase">Username / Email</label>
+              <label class="text-[10px] font-black text-[var(--text-muted)] uppercase tracking-widest pl-1">Username</label>
               <input
                 v-model="username"
                 type="text"
-                placeholder="Enter your username"
-                class="w-full border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 px-4 py-2.5 text-sm rounded-sm outline-none focus:border-[#ff6600] transition-colors dark:text-white"
+                placeholder="Omindu"
+                class="w-full border-2 border-[var(--border-color)] bg-[var(--card-bg)] px-5 py-3 text-sm rounded-xl outline-none focus:border-[var(--accent-color)] transition-all dark:text-white shadow-inner"
                 required
               />
             </div>
 
             <div class="space-y-1">
-              <div class="flex justify-between items-center">
-                <label class="text-[10px] font-bold text-gray-400 uppercase">Password</label>
-                <a href="#" class="text-[10px] text-blue-500 hover:underline font-bold">Forgot?</a>
+              <div class="flex justify-between items-center px-1">
+                <label class="text-[10px] font-black text-[var(--text-muted)] uppercase tracking-widest">Password</label>
+                <a href="#" class="text-[10px] text-[var(--accent-color)] hover:underline font-black">Account Help?</a>
               </div>
               <input
                 v-model="password"
                 :type="showPassword ? 'text' : 'password'"
                 placeholder="••••••••"
-                class="w-full border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 px-4 py-2.5 text-sm rounded-sm outline-none focus:border-[#ff6600] transition-colors dark:text-white"
+                class="w-full border-2 border-[var(--border-color)] bg-[var(--card-bg)] px-5 py-3 text-sm rounded-xl outline-none focus:border-[var(--accent-color)] transition-all dark:text-white shadow-inner"
                 required
               />
             </div>
@@ -92,23 +92,23 @@ const createDemoAccount = async () => {
             <button
               type="submit"
               :disabled="auth.isLoading"
-              class="w-full bg-[#ff6600] hover:bg-[#e65c00] text-white font-bold py-3 rounded-sm transition disabled:opacity-50 uppercase text-xs"
+              class="w-full bg-[var(--accent-color)] hover:bg-[#1D4ED8] text-white font-black py-4 rounded-xl transition-all shadow-xl shadow-[var(--accent-color)]/20 uppercase text-xs tracking-[0.2em] active:scale-95 disabled:opacity-50"
             >
-              {{ auth.isLoading ? 'Processing...' : 'Login' }}
+              {{ auth.isLoading ? 'Verifying...' : 'Login' }}
             </button>
           </form>
 
-          <div class="mt-8 pt-8 border-t border-gray-100 dark:border-gray-800">
+          <div class="mt-8 pt-8 border-t border-[var(--border-color)]">
             <button
               @click="createDemoAccount"
-              class="w-full border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 py-2.5 text-xs font-bold rounded-sm transition-colors uppercase dark:text-gray-300"
+              class="w-full border-2 border-[var(--border-color)] hover:border-[var(--accent-color)] hover:text-[var(--accent-color)] py-3 text-[10px] font-black rounded-xl transition-all uppercase tracking-[0.1em] dark:text-gray-300 shadow-sm"
             >
-              Demo Account
+              Instant Demo Access
             </button>
             
-            <p class="text-center text-xs text-gray-500 font-bold mt-6 uppercase">
-              New here? 
-              <button @click="router.push('/register')" class="text-[#ff6600] hover:underline">Create Account</button>
+            <p class="text-center text-[10px] text-[var(--text-muted)] font-black mt-8 uppercase tracking-widest">
+              Don't have an account? 
+              <button @click="router.push('/register')" class="text-[var(--accent-color)] hover:underline">Register Now</button>
             </p>
           </div>
         </div>
