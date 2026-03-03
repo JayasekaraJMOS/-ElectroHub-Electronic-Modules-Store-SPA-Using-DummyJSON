@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import { ref, onMounted, watch, computed } from 'vue'
+import { useRouter } from 'vue-router'
 import ProductCard from '../components/ProductCard.vue'
 import NavBar from '../components/NavBar.vue'
 import type { Product } from '../types/Product'
 import { useSearchStore } from '../stores/search'
+
+const router = useRouter()
 
 const products = ref<Product[]>([])
 const flashProducts = ref<Product[]>([])
@@ -136,7 +139,12 @@ const visibleFlashProducts = computed(() => {
         </div>
         
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-[1px] bg-[var(--border-color)] transition-all duration-500">
-          <div v-for="item in visibleFlashProducts" :key="item.id" class="bg-[var(--card-bg)] p-4 group cursor-pointer hover:shadow-xl transition-all relative animate-fade-in">
+          <div 
+            v-for="item in visibleFlashProducts" 
+            :key="item.id" 
+            @click="router.push(`/product/${item.id}`)"
+            class="bg-[var(--card-bg)] p-4 group cursor-pointer hover:shadow-xl transition-all relative animate-fade-in"
+          >
             <div class="absolute top-2 left-2 bg-[var(--promo-color)] text-white text-[10px] font-black px-2 py-0.5 rounded shadow-lg z-10 shrink-0">
               -{{ item.discount }}% OFF
             </div>

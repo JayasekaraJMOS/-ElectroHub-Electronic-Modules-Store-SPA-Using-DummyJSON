@@ -34,10 +34,12 @@ const logout = () => {
     </div>
 
     <!-- Main Header -->
-    <div class="max-w-7xl mx-auto px-4 py-6 flex items-center justify-between gap-10">
+    <div class="max-w-7xl mx-auto px-4 py-8 flex items-center justify-between gap-10">
       <!-- Logo -->
-      <button @click="goToHome" class="flex items-center gap-2 shrink-0 group">
-        <img :src="logo" alt="OMAX ONLINE STORE" class="h-20 w-auto object-contain group-hover:scale-105 transition-transform" />
+      <button @click="goToHome" class="flex items-center gap-4 shrink-0 group">
+        <div class="h-24 w-24 bg-white rounded-2xl flex items-center justify-center shadow-[0_10px_30px_rgba(255,255,255,0.2)] group-hover:scale-105 transition-all p-2 overflow-hidden">
+          <img :src="logo" alt="OMAX ONLINE STORE" class="w-full h-full object-contain" />
+        </div>
       </button>
 
       <!-- Search Bar -->
