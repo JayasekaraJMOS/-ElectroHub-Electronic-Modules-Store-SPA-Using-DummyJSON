@@ -4,6 +4,7 @@ import { useAuthStore } from '../stores/auth'
 import { useCartStore } from '../stores/cart'
 import { useThemeStore } from '../stores/theme'
 import { useSearchStore } from '../stores/search'
+import logo from '../assets/logo.png'
 
 const router = useRouter()
 const auth = useAuthStore()
@@ -33,13 +34,10 @@ const logout = () => {
     </div>
 
     <!-- Main Header -->
-    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between gap-8">
+    <div class="max-w-7xl mx-auto px-4 py-6 flex items-center justify-between gap-10">
       <!-- Logo -->
       <button @click="goToHome" class="flex items-center gap-2 shrink-0 group">
-        <div class="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
-          <span class="text-[#2563EB] font-black text-2xl italic">O</span>
-        </div>
-        <span class="text-3xl font-black tracking-tighter hidden lg:block uppercase transition-all">OMAX</span>
+        <img :src="logo" alt="OMAX ONLINE STORE" class="h-20 w-auto object-contain group-hover:scale-105 transition-transform" />
       </button>
 
       <!-- Search Bar -->
@@ -61,8 +59,8 @@ const logout = () => {
 
       <!-- Actions -->
       <div class="flex items-center gap-6 shrink-0">
-        <button @click="goToCart" class="relative hover:scale-110 transition-transform group">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <button @click="goToCart" class="relative group p-2 hover:bg-white/10 rounded-xl transition-all">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
           </svg>
           <span v-if="cart.count > 0" class="absolute -top-1.5 -right-2 bg-[#10B981] text-white text-[10px] font-black min-w-[22px] h-5.5 flex items-center justify-center rounded-full border-2 border-[#2563EB] shadow-lg animate-bounce">
@@ -72,12 +70,12 @@ const logout = () => {
 
         <button @click="theme.toggleDarkMode" class="p-2 hover:bg-white/10 rounded-xl transition-colors md:flex items-center gap-2 border border-white/20">
            <span class="text-[10px] font-black uppercase tracking-widest">{{ theme.isDark ? 'Light' : 'Dark' }}</span>
-           <span class="text-sm">{{ theme.isDark ? '☀️' : '🌙' }}</span>
+           <span class="text-sm scale-110">{{ theme.isDark ? '☀️' : '🌙' }}</span>
         </button>
 
         <div class="hidden md:flex items-center gap-4 border-l border-white/20 pl-6 ml-2">
             <button v-if="!auth.isAuthenticated" @click="login" class="text-xs font-black tracking-widest hover:text-blue-200 transition-colors">LOGIN</button>
-            <button v-else @click="logout" class="text-xs font-black tracking-widest hover:text-blue-200 transition-colors">LOGOUT</button>
+            <button v-else @click="logout" class="text-xs font-black tracking-widest hover:text-red-300 transition-colors">LOGOUT</button>
         </div>
       </div>
     </div>
