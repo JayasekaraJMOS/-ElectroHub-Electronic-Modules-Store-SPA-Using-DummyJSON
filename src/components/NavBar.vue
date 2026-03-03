@@ -30,57 +30,69 @@ const login = () => {
 </script>
 
 <template>
-  <nav class="sticky top-0 z-50 bg-gradient-to-r from-blue-600 to-blue-800 dark:from-blue-900 dark:to-blue-950 shadow-lg transition-colors duration-300">
-    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+  <nav class="sticky top-0 z-50 bg-[#f85606] shadow-sm transition-colors duration-300">
+    <!-- Top thin bar -->
+    <div class="bg-[#f85606] border-b border-white/10">
+      <div class="max-w-7xl mx-auto px-4 py-1 flex justify-end items-center gap-6 text-[12px] text-white">
+        <a href="#" class="hover:underline">SAVE MORE ON APP</a>
+        <a href="#" class="hover:underline">BECOME A SELLER</a>
+        <a href="#" class="hover:underline">HELP & SUPPORT</a>
+        <button v-if="!auth.isAuthenticated" @click="login" class="hover:underline font-bold uppercase">LOGIN</button>
+        <button v-if="!auth.isAuthenticated" @click="router.push('/register')" class="hover:underline font-bold uppercase">SIGN UP</button>
+        <button v-if="auth.isAuthenticated" @click="logout" class="hover:underline font-bold uppercase">LOGOUT</button>
+        <span class="cursor-pointer">ဘာသာစကားရွေးချယ်ရန်</span>
+      </div>
+    </div>
+
+    <!-- Main Nav -->
+    <div class="max-w-7xl mx-auto px-4 py-3 flex items-center gap-8">
       <!-- Logo -->
-      <button @click="goToHome" class="flex items-center gap-2 hover:opacity-90 transition group">
-        <span class="text-3xl group-hover:scale-110 transition">🛍️</span>
-        <div>
-          <h1 class="text-2xl font-bold text-white">Online Shopping Stores</h1>
-          <p class="text-blue-100 dark:text-blue-300 text-xs">Your Favorite Shop</p>
+      <button @click="goToHome" class="flex items-center gap-2 flex-shrink-0 transition active:scale-95">
+        <div class="flex items-center">
+          <span class="text-4xl text-white font-bold italic tracking-tighter">Daraz</span>
+          <div class="ml-1 w-2 h-2 bg-white rounded-full"></div>
         </div>
       </button>
 
-      <!-- Right Section -->
-      <div class="flex items-center gap-4">
-        <!-- User Info -->
-        <div v-if="auth.isAuthenticated" class="text-white text-sm">
-          <p class="font-semibold">{{ auth.username }}</p>
-          <p class="text-blue-100 dark:text-blue-300 text-xs">Logged in</p>
+      <!-- Search Bar -->
+      <div class="flex-grow flex items-center group">
+        <div class="relative w-full">
+          <input 
+            type="text" 
+            placeholder="Search in Daraz"
+            class="w-full bg-[#eff0f5] py-2 px-4 rounded-sm text-sm focus:outline-none focus:ring-1 focus:ring-orange-200"
+          >
+          <button class="absolute right-0 top-0 bottom-0 bg-[#ffe1d2] hover:bg-[#ffcbb3] px-5 flex items-center justify-center transition">
+             <span class="text-orange-600">🔍</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Right Icons -->
+      <div class="flex items-center gap-8 flex-shrink-0">
+        <!-- Cart -->
+        <button @click="goToCart" class="relative group p-1 transition-transform active:scale-90">
+          <span class="text-3xl text-white">🛒</span>
+          <span 
+            v-if="cart.count > 0"
+            class="absolute -top-1 -right-2 bg-white text-[#f85606] text-[10px] font-bold w-5 h-5 flex items-center justify-center rounded-full shadow-sm border border-orange-100"
+          >
+            {{ cart.count }}
+          </span>
+        </button>
+
+        <!-- User/Logout -->
+        <div v-if="auth.isAuthenticated" class="flex items-center gap-3 bg-white/10 px-3 py-1.5 rounded-md">
+           <span class="text-white text-sm font-medium">{{ auth.username }}</span>
         </div>
 
-        <!-- Dark Mode Toggle -->
+        <!-- Dark Mode Toggle (Kept for functionality) -->
         <button
           @click="theme.toggleDarkMode"
-          class="p-2 bg-white/20 hover:bg-white/30 rounded-full transition text-white text-xl"
+          class="p-2 bg-white/10 hover:bg-white/20 rounded-full transition text-white text-sm"
           :title="theme.isDark ? 'Light mode' : 'Dark mode'"
         >
           {{ theme.isDark ? '☀️' : '🌙' }}
-        </button>
-
-        <!-- Cart Button -->
-        <button 
-          @click="goToCart"
-          class="flex items-center gap-2 bg-white text-blue-600 dark:text-blue-700 px-6 py-2 rounded-full font-bold hover:bg-blue-50 dark:hover:bg-blue-100 transition duration-200 shadow-md"
-        >
-          <span class="text-xl">🛒</span>
-          <span>({{ cart.count }})</span>
-        </button>
-
-        <!-- Auth Button -->
-        <button
-          v-if="auth.isAuthenticated"
-          @click="logout"
-          class="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-full font-bold transition duration-200"
-        >
-          Logout
-        </button>
-        <button
-          v-else
-          @click="login"
-          class="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-full font-bold transition duration-200"
-        >
-          Login
         </button>
       </div>
     </div>

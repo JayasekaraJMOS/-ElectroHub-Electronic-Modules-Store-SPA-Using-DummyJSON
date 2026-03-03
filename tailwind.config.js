@@ -8,6 +8,9 @@ export default {
   theme: {
     extend: {
       colors: {
+        'daraz-orange': '#f85606',
+        'daraz-bg': '#f5f5f5',
+        'daraz-dark': '#212121',
         // dark mode
         'electro-bg': '#0b0e14',
         'electro-card': '#1c222d',
