@@ -34,12 +34,12 @@ const logout = () => {
     </div>
 
     <!-- Main Header -->
-    <div class="max-w-7xl mx-auto px-4 py-8 flex items-center justify-between gap-10">
+    <div class="max-w-7xl mx-auto px-4 py-5 flex items-center justify-between gap-6">
       <!-- Logo -->
-      <button @click="goToHome" class="flex items-center gap-4 shrink-0 group">
-        <div class="h-28 w-40 flex items-center justify-center group-hover:scale-105 transition-all overflow-visible mix-blend-screen">
-          <!-- Mix-blend-screen + invert reliably turns black text on white background into white text on transparent background -->
-          <img :src="logo" alt="OMAX ONLINE STORE" class="w-full h-full object-contain scale-[1.5] brightness-[1.2] grayscale contrast-[2]" style="filter: grayscale(100%) invert(100%) contrast(200%);" />
+      <button @click="goToHome" class="flex items-center gap-4 shrink-0 group relative z-10">
+        <div class="h-20 w-36 flex items-center justify-center group-hover:scale-105 transition-all overflow-visible">
+          <!-- No background box. Using a fractional CSS drop-shadow matrix to create a very thin, subtle black outline that looks correct even when scaled up by 2.5x -->
+          <img :src="logo" alt="OMAX ONLINE STORE" class="w-full h-full object-contain scale-[2.5] pointer-events-none" style="filter: drop-shadow(0.4px 0.4px 0 rgba(0,0,0,0.8)) drop-shadow(-0.4px -0.4px 0 rgba(0,0,0,0.8)) drop-shadow(0.4px -0.4px 0 rgba(0,0,0,0.8)) drop-shadow(-0.4px 0.4px 0 rgba(0,0,0,0.8)) drop-shadow(0px 4px 5px rgba(0,0,0,0.4));" />
         </div>
       </button>
 
