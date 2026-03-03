@@ -29,118 +29,108 @@ const addToCart = () => {
   }
 }
 
-const goBack = () => {
-  router.back()
-}
+
 </script>
 
 <template>
   <NavBar />
 
-  <div class="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-850 transition-colors duration-300">
-    <!-- Loading State -->
-    <div v-if="isLoading" class="flex items-center justify-center h-screen">
-      <div class="text-center">
-        <div class="animate-bounce text-8xl mb-4">🛍️</div>
-        <p class="text-gray-600 dark:text-gray-400 text-xl font-bold">Loading product details...</p>
+  <div class="min-h-screen bg-[var(--bg-color)] text-[var(--text-color)] transition-colors duration-500 pb-12">
+    <!-- Breadcrumbs -->
+    <div class="max-w-7xl mx-auto px-4 py-4">
+      <div class="flex items-center gap-2 text-xs text-gray-500 font-bold uppercase tracking-tight">
+        <button @click="router.push('/')" class="hover:text-[#ff6600]">Home</button>
+        <span>/</span>
+        <span class="text-gray-400 capitalize">{{ product?.category }}</span>
+        <span>/</span>
+        <span class="text-gray-900 dark:text-gray-200 truncate">{{ product?.title }}</span>
       </div>
     </div>
 
-    <!-- Product Details -->
-    <div v-else-if="product" class="py-12 px-6">
-      <div class="max-w-6xl mx-auto">
-        <!-- Back Button -->
-        <button
-          @click="goBack"
-          class="mb-8 flex items-center gap-2 text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 font-bold transition-all duration-300 hover:gap-4"
-        >
-          ← Back
-        </button>
+    <!-- Loading State -->
+    <div v-if="isLoading" class="flex items-center justify-center min-h-[60vh]">
+      <div class="w-12 h-12 border-4 border-[#ff6600]/20 border-t-[#ff6600] rounded-full animate-spin"></div>
+    </div>
 
-        <div class="grid md:grid-cols-2 gap-12">
-          <!-- Image Section -->
-          <div class="flex items-center justify-center bg-white dark:bg-gray-700 rounded-2xl shadow-xl h-96">
-            <img
-              :src="product.thumbnail"
-              :alt="product.title"
-              class="max-h-80 max-w-80 object-contain hover:scale-110 transition-transform duration-300"
-            />
-          </div>
-
-          <!-- Details Section -->
-          <div class="space-y-6">
-            <!-- Title and Rating -->
-            <div>
-              <h1 class="text-5xl font-black text-gray-900 dark:text-white mb-4 leading-tight">
-                {{ product.title }}
-              </h1>
-              <div class="flex items-center gap-4">
-                <span v-if="product.rating" class="flex items-center gap-2 bg-gradient-to-r from-yellow-100 to-yellow-50 dark:from-yellow-900 dark:to-yellow-800 px-6 py-3 rounded-full">
-                  <span class="text-2xl">⭐</span>
-                  <span class="font-black text-2xl text-yellow-700 dark:text-yellow-300">{{ product.rating.toFixed(1) }}</span>
-                </span>
-                <span v-if="product.reviews" class="text-gray-600 dark:text-gray-400 font-semibold">({{ product.reviews.length }} reviews)</span>
-              </div>
-            </div>
-
-            <!-- Stock Status -->
-            <div v-if="product.stock" class="bg-gradient-to-r from-green-100 to-green-50 dark:from-green-900 dark:to-green-800 border-l-4 border-green-600 dark:border-green-400 p-6 rounded-xl">
-              <p class="text-green-800 dark:text-green-200 font-black text-lg">✓ In Stock ({{ product.stock }} available)</p>
-            </div>
-            <div v-else class="bg-gradient-to-r from-red-100 to-red-50 dark:from-red-900 dark:to-red-800 border-l-4 border-red-600 dark:border-red-400 p-6 rounded-xl">
-              <p class="text-red-800 dark:text-red-200 font-black text-lg">✗ Out of Stock</p>
-            </div>
-
-            <!-- SKU -->
-            <div v-if="product.sku" class="space-y-2">
-              <p class="text-sm font-bold text-gray-600 dark:text-gray-400 uppercase tracking-wider">SKU Number</p>
-              <p class="text-gray-900 dark:text-gray-100 font-mono bg-gray-100 dark:bg-gray-800 px-4 py-3 rounded-lg font-bold">{{ product.sku }}</p>
-            </div>
-
-            <!-- Description -->
-            <div>
-              <h2 class="text-2xl font-black text-gray-900 dark:text-white mb-3">Description</h2>
-              <p class="text-gray-700 dark:text-gray-300 text-lg leading-relaxed">
-                {{ product.description }}
-              </p>
-            </div>
-
-            <!-- Brand & Category -->
-            <div class="grid grid-cols-2 gap-4">
-              <div v-if="product.brand">
-                <p class="text-sm font-bold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Brand</p>
-                <p class="text-gray-900 dark:text-white font-bold">{{ product.brand }}</p>
-              </div>
-              <div v-if="product.category">
-                <p class="text-sm font-bold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Category</p>
-                <p class="text-gray-900 dark:text-white font-bold capitalize">{{ product.category }}</p>
-              </div>
-            </div>
-
-            <!-- Price and Action -->
-            <div class="bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-900 dark:to-purple-900 p-8 rounded-2xl border-2 border-indigo-200 dark:border-indigo-700">
-              <div class="flex items-baseline gap-4 mb-6">
-                <p class="text-6xl font-black text-green-600 dark:text-green-400">${{ product.price }}</p>
-                <p v-if="product.discountPercentage" class="text-3xl text-red-600 dark:text-red-400 font-black">-{{ product.discountPercentage }}%</p>
-              </div>
-
-              <button
-                @click="addToCart"
-                :disabled="!product.stock"
-                class="w-full bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 dark:from-indigo-700 dark:via-purple-700 dark:to-pink-700 text-white text-xl py-5 rounded-xl font-black hover:from-indigo-700 hover:via-purple-700 hover:to-pink-700 dark:hover:from-indigo-800 dark:hover:via-purple-800 dark:hover:to-pink-800 transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:scale-100"
-              >
-                🛒 Add to Cart
-              </button>
-            </div>
-          </div>
+    <!-- Product Content -->
+    <div v-else-if="product" class="max-w-7xl mx-auto px-4 grid md:grid-cols-2 gap-6 items-start">
+      <!-- Left: Image -->
+      <div class="bg-[var(--card-bg)] border border-[var(--border-color)] p-8 rounded-sm shadow-sm md:sticky md:top-24">
+        <img
+          :src="product.thumbnail"
+          :alt="product.title"
+          class="w-full h-auto object-contain max-h-[500px]"
+        />
+        
+        <!-- Small Images Mockup -->
+        <div class="flex gap-4 mt-8 justify-center opacity-60">
+           <div v-for="i in 3" :key="i" class="w-16 h-16 border border-gray-200 dark:border-gray-800 p-1 bg-gray-50 dark:bg-gray-900 rounded-sm cursor-pointer hover:border-[#ff6600]">
+              <img :src="product.thumbnail" class="w-full h-full object-contain" />
+           </div>
         </div>
       </div>
-    </div>
 
-    <!-- Not Found -->
-    <div v-else class="flex flex-col items-center justify-center h-screen">
-      <p class="text-gray-600 dark:text-gray-400 text-2xl font-bold mb-6">Product not found</p>
-      <button @click="goBack" class="text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 text-lg font-bold">← Go Back</button>
+      <!-- Right: Details -->
+      <div class="space-y-6">
+        <div class="bg-[var(--card-bg)] border border-[var(--border-color)] p-8 rounded-sm shadow-sm">
+          <h1 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-4 line-clamp-2">
+            {{ product.title }}
+          </h1>
+          
+          <div class="flex items-center gap-4 mb-6">
+             <div class="flex items-center gap-1">
+                <span class="text-yellow-400">★</span>
+                <span class="text-sm font-bold text-gray-600 dark:text-gray-400">{{ product.rating }}</span>
+             </div>
+             <div class="h-4 w-px bg-gray-200 dark:bg-gray-800"></div>
+             <span class="text-xs font-bold text-blue-500 uppercase">1.2k+ Sold</span>
+          </div>
+
+          <div class="border-t border-b border-gray-100 dark:border-gray-800 py-6 mb-8">
+             <div class="flex items-baseline gap-4">
+                <span class="text-4xl font-bold text-[#ff6600]">${{ product.price }}</span>
+                <span v-if="product.discountPercentage" class="text-lg text-gray-400 line-through">
+                   ${{ (product.price * (1 + product.discountPercentage/100)).toFixed(2) }}
+                </span>
+                <span v-if="product.discountPercentage" class="text-sm text-gray-900 dark:text-gray-200 bg-gray-100 dark:bg-gray-800 px-2 py-0.5 font-bold">
+                   -{{ Math.round(product.discountPercentage) }}%
+                </span>
+             </div>
+             <p class="text-xs text-gray-400 font-bold mt-2 uppercase">Promotional Price Included</p>
+          </div>
+
+          <div class="grid grid-cols-2 gap-4">
+             <button
+               @click="addToCart"
+               class="bg-[#ff6600] hover:bg-[#e65c00] text-white py-4 font-bold rounded-sm shadow-sm transition-transform active:scale-95 uppercase"
+             >
+               Add to Cart
+             </button>
+             <button class="bg-[#26abd4] hover:bg-[#1a90b5] text-white py-4 font-bold rounded-sm shadow-sm transition-transform active:scale-95 uppercase">
+               Buy Now
+             </button>
+          </div>
+        </div>
+
+        <!-- Description Box -->
+        <div class="bg-[var(--card-bg)] border border-[var(--border-color)] p-8 rounded-sm shadow-sm">
+           <h3 class="text-lg font-bold text-gray-800 dark:text-gray-200 uppercase mb-4 border-b border-gray-100 dark:border-gray-800 pb-2">Description</h3>
+           <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
+             {{ product.description }}
+           </p>
+           
+           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8 pt-8 border-t border-gray-100 dark:border-gray-800">
+              <div class="space-y-1">
+                 <span class="text-[10px] text-gray-400 font-bold uppercase">Condition</span>
+                 <p class="text-sm font-bold text-gray-700 dark:text-gray-300">Brand New</p>
+              </div>
+              <div class="space-y-1">
+                 <span class="text-[10px] text-gray-400 font-bold uppercase">Warranty</span>
+                 <p class="text-sm font-bold text-gray-700 dark:text-gray-300">Standard Manufacturer</p>
+              </div>
+           </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>

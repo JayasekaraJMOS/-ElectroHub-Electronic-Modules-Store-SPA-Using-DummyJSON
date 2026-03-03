@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
+import NavBar from '../components/NavBar.vue'
 
 const router = useRouter()
 const auth = useAuthStore()
@@ -30,7 +31,7 @@ const handleRegister = async () => {
       })
     })
     if (!resp.ok) throw new Error('Registration failed')
-    const data = await resp.json()
+    
     // after registration log them in
     await auth.login(username.value, password.value)
     router.push('/')
@@ -43,47 +44,94 @@ const handleRegister = async () => {
 </script>
 
 <template>
-  <div class="min-h-screen bg-gradient-to-br from-blue-600 to-blue-800 flex items-center justify-center px-4">
-    <div class="w-full max-w-md">
-      <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl p-8 space-y-6">
-        <div class="text-center">
-          <h1 class="text-5xl font-black bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-2">🛍️ Online Shopping Stores</h1>
-          <p class="text-gray-600 dark:text-gray-300 text-lg font-semibold">Create Demo Account</p>
+  <div class="min-h-screen flex flex-col bg-[var(--bg-color)] transition-colors duration-500">
+    <NavBar />
+    
+    <div class="flex-grow flex items-center justify-center p-6 text-[var(--text-color)]">
+      <div class="w-full max-w-md bg-[var(--card-bg)] border border-[var(--border-color)] rounded-sm shadow-sm overflow-hidden">
+        <div class="p-8">
+          <div class="text-center mb-8">
+            <h1 class="text-2xl font-bold text-gray-900 dark:text-white uppercase tracking-tight">Create Account</h1>
+            <p class="text-xs text-gray-500 font-bold mt-2 uppercase">Join OnlineStore today</p>
+          </div>
+
+          <div v-if="error" class="mb-6 p-3 bg-red-50 border border-red-200 text-red-600 text-xs font-bold rounded-sm">
+            {{ error }}
+          </div>
+
+          <form @submit.prevent="handleRegister" class="space-y-4">
+            <div class="grid grid-cols-2 gap-4">
+              <div class="space-y-1">
+                <label class="text-[10px] font-bold text-gray-400 uppercase">First Name</label>
+                <input
+                  v-model="firstName"
+                  type="text"
+                  placeholder="John"
+                  class="w-full border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 px-4 py-2 text-sm rounded-sm outline-none focus:border-[#ff6600] transition-colors dark:text-white"
+                  required
+                />
+              </div>
+              <div class="space-y-1">
+                <label class="text-[10px] font-bold text-gray-400 uppercase">Last Name</label>
+                <input
+                  v-model="lastName"
+                  type="text"
+                  placeholder="Doe"
+                  class="w-full border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 px-4 py-2 text-sm rounded-sm outline-none focus:border-[#ff6600] transition-colors dark:text-white"
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="space-y-1">
+              <label class="text-[10px] font-bold text-gray-400 uppercase">Username</label>
+              <input
+                v-model="username"
+                type="text"
+                placeholder="johndoe123"
+                class="w-full border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 px-4 py-2 text-sm rounded-sm outline-none focus:border-[#ff6600] transition-colors dark:text-white"
+                required
+              />
+            </div>
+
+            <div class="space-y-1">
+              <label class="text-[10px] font-bold text-gray-400 uppercase">Email</label>
+              <input
+                v-model="email"
+                type="email"
+                placeholder="john@example.com"
+                class="w-full border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 px-4 py-2 text-sm rounded-sm outline-none focus:border-[#ff6600] transition-colors dark:text-white"
+                required
+              />
+            </div>
+
+            <div class="space-y-1">
+              <label class="text-[10px] font-bold text-gray-400 uppercase">Password</label>
+              <input
+                v-model="password"
+                type="password"
+                placeholder="••••••••"
+                class="w-full border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 px-4 py-2 text-sm rounded-sm outline-none focus:border-[#ff6600] transition-colors dark:text-white"
+                required
+              />
+            </div>
+
+            <button
+              type="submit"
+              :disabled="isLoading"
+              class="w-full bg-[#ff6600] hover:bg-[#e65c00] text-white font-bold py-3 rounded-sm transition disabled:opacity-50 uppercase text-xs mt-4"
+            >
+              {{ isLoading ? 'Initializing...' : 'Sign Up' }}
+            </button>
+          </form>
+
+          <div class="mt-8 pt-8 border-t border-gray-100 dark:border-gray-800 text-center">
+            <p class="text-xs text-gray-500 font-bold uppercase">
+              Already have an account? 
+              <button @click="router.push('/login')" class="text-[#ff6600] hover:underline">Login Here</button>
+            </p>
+          </div>
         </div>
-
-        <div v-if="error" class="bg-red-100 border-l-4 border-red-600 p-4 rounded">
-          <p class="text-red-800 font-semibold">{{ error }}</p>
-        </div>
-
-        <form @submit.prevent="handleRegister" class="space-y-4">
-          <div>
-            <label class="block text-sm font-bold text-gray-700 dark:text-gray-200 mb-2">First Name</label>
-            <input v-model="firstName" type="text" class="w-full px-4 py-2 border-2 border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:border-blue-600 dark:bg-gray-700 dark:text-white transition" required />
-          </div>
-          <div>
-            <label class="block text-sm font-bold text-gray-700 dark:text-gray-200 mb-2">Last Name</label>
-            <input v-model="lastName" type="text" class="w-full px-4 py-2 border-2 border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:border-blue-600 dark:bg-gray-700 dark:text-white transition" required />
-          </div>
-          <div>
-            <label class="block text-sm font-bold text-gray-700 dark:text-gray-200 mb-2">Email</label>
-            <input v-model="email" type="email" class="w-full px-4 py-2 border-2 border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:border-blue-600 dark:bg-gray-700 dark:text-white transition" required />
-          </div>
-          <div>
-            <label class="block text-sm font-bold text-gray-700 dark:text-gray-200 mb-2">Username</label>
-            <input v-model="username" type="text" class="w-full px-4 py-2 border-2 border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:border-blue-600 dark:bg-gray-700 dark:text-white transition" required />
-          </div>
-          <div>
-            <label class="block text-sm font-bold text-gray-700 dark:text-gray-200 mb-2">Password</label>
-            <input v-model="password" type="password" class="w-full px-4 py-2 border-2 border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:border-blue-600 dark:bg-gray-700 dark:text-white transition" required />
-          </div>
-          <button type="submit" :disabled="isLoading" class="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white font-bold py-2 rounded-lg hover:from-blue-700 hover:to-blue-800 transition disabled:opacity-50 disabled:cursor-not-allowed">
-            {{ isLoading ? 'Creating...' : 'Register & Login' }}
-          </button>
-        </form>
-
-        <p class="text-xs text-center text-gray-600 dark:text-gray-400">
-          Already have an account? <router-link to="/login" class="text-blue-600 dark:text-blue-400 hover:underline">Log in</router-link>
-        </p>
       </div>
     </div>
   </div>

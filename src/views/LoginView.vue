@@ -17,9 +17,7 @@ const handleLogin = async () => {
   }
 }
 
-// Demo accounts from DummyJSON
-// demo functionality now generates a user programmatically
-const demoAccounts = [] // kept for structure but unused
+
 
 const createDemoAccount = async () => {
   // generate simple random credentials
@@ -49,100 +47,70 @@ const createDemoAccount = async () => {
 </script>
 
 <template>
-  <div class="min-h-screen bg-gradient-to-br from-blue-600 to-blue-800 flex items-center justify-center px-4">
-    <div class="w-full max-w-md">
-      <!-- Card -->
-      <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl p-8 space-y-6">
-        <!-- Header -->
-        <div class="text-center">
-          <h1 class="text-5xl font-black bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-2">🛍️ Online Shopping Stores</h1>
-          <p class="text-gray-600 dark:text-gray-300 text-lg font-semibold">Premium Products Store</p>
-        </div>
-
-        <!-- Error Message -->
-        <div v-if="auth.error" class="bg-red-100 border-l-4 border-red-600 p-4 rounded">
-          <p class="text-red-800 font-semibold">{{ auth.error }}</p>
-        </div>
-
-        <!-- Form -->
-        <form @submit.prevent="handleLogin" class="space-y-4">
-          <!-- Username -->
-          <div>
-            <label class="block text-sm font-bold text-gray-700 dark:text-gray-200 mb-2">Username</label>
-            <input
-              v-model="username"
-              type="text"
-              placeholder="Enter username"
-              class="w-full px-4 py-2 border-2 border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:border-blue-600 dark:bg-gray-700 dark:text-white transition"
-              required
-            />
+  <div class="min-h-screen flex flex-col bg-[var(--bg-color)] transition-colors duration-500">
+    <NavBar />
+    
+    <div class="flex-grow flex items-center justify-center p-6 text-[var(--text-color)]">
+      <div class="w-full max-w-md bg-[var(--card-bg)] border border-[var(--border-color)] rounded-sm shadow-sm overflow-hidden">
+        <div class="p-8">
+          <div class="text-center mb-8">
+            <h1 class="text-2xl font-bold text-gray-900 dark:text-white uppercase tracking-tight">Login</h1>
+            <p class="text-xs text-gray-500 font-bold mt-2 uppercase">Welcome back to OnlineStore</p>
           </div>
 
-          <!-- Password -->
-          <div>
-            <label class="block text-sm font-bold text-gray-700 dark:text-gray-200 mb-2">Password</label>
-            <div class="relative">
+          <div v-if="auth.error" class="mb-6 p-3 bg-red-50 border border-red-200 text-red-600 text-xs font-bold rounded-sm">
+            {{ auth.error }}
+          </div>
+
+          <form @submit.prevent="handleLogin" class="space-y-4">
+            <div class="space-y-1">
+              <label class="text-[10px] font-bold text-gray-400 uppercase">Username / Email</label>
+              <input
+                v-model="username"
+                type="text"
+                placeholder="Enter your username"
+                class="w-full border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 px-4 py-2.5 text-sm rounded-sm outline-none focus:border-[#ff6600] transition-colors dark:text-white"
+                required
+              />
+            </div>
+
+            <div class="space-y-1">
+              <div class="flex justify-between items-center">
+                <label class="text-[10px] font-bold text-gray-400 uppercase">Password</label>
+                <a href="#" class="text-[10px] text-blue-500 hover:underline font-bold">Forgot?</a>
+              </div>
               <input
                 v-model="password"
                 :type="showPassword ? 'text' : 'password'"
-                placeholder="Enter password"
-                class="w-full px-4 py-2 border-2 border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:border-blue-600 dark:bg-gray-700 dark:text-white transition"
+                placeholder="••••••••"
+                class="w-full border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 px-4 py-2.5 text-sm rounded-sm outline-none focus:border-[#ff6600] transition-colors dark:text-white"
                 required
               />
-              <button
-                type="button"
-                @click="showPassword = !showPassword"
-                class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-600 dark:text-gray-400"
-              >
-                {{ showPassword ? '👁️' : '👁️‍🗨️' }}
-              </button>
             </div>
-          </div>
 
-          <!-- Submit Button -->
-          <button
-            type="submit"
-            :disabled="auth.isLoading"
-            class="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white font-bold py-2 rounded-lg hover:from-blue-700 hover:to-blue-800 transition disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {{ auth.isLoading ? 'Logging in...' : 'Log In' }}
-          </button>
-          <button
-            type="button"
-            @click="router.back()"
-            class="mt-2 w-full text-center text-sm text-gray-600 dark:text-gray-400 hover:underline"
-          >
-            ← Back
-          </button>
-        </form>
+            <button
+              type="submit"
+              :disabled="auth.isLoading"
+              class="w-full bg-[#ff6600] hover:bg-[#e65c00] text-white font-bold py-3 rounded-sm transition disabled:opacity-50 uppercase text-xs"
+            >
+              {{ auth.isLoading ? 'Processing...' : 'Login' }}
+            </button>
+          </form>
 
-        <!-- Demo generation -->
-        <div class="relative">
-          <div class="absolute inset-0 flex items-center">
-            <div class="w-full border-t border-gray-300 dark:border-gray-600"></div>
-          </div>
-          <div class="relative flex justify-center text-sm">
-            <span class="px-2 bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400">Demo Account</span>
+          <div class="mt-8 pt-8 border-t border-gray-100 dark:border-gray-800">
+            <button
+              @click="createDemoAccount"
+              class="w-full border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 py-2.5 text-xs font-bold rounded-sm transition-colors uppercase dark:text-gray-300"
+            >
+              Demo Account
+            </button>
+            
+            <p class="text-center text-xs text-gray-500 font-bold mt-6 uppercase">
+              New here? 
+              <button @click="router.push('/register')" class="text-[#ff6600] hover:underline">Create Account</button>
+            </p>
           </div>
         </div>
-
-        <div class="text-center">
-          <button
-            type="button"
-            @click="createDemoAccount"
-            class="w-full px-4 py-2 bg-indigo-600 text-white rounded-lg font-bold hover:bg-indigo-700 transition"
-          >
-            Create & Login Demo
-          </button>
-        </div>
-
-        <!-- Footer Note -->
-        <p class="text-xs text-center text-gray-600 dark:text-gray-400">
-          Uses demo data from 
-          <a href="https://dummyjson.com" target="_blank" class="text-blue-600 dark:text-blue-400 hover:underline">
-            DummyJSON.com
-          </a>
-        </p>
       </div>
     </div>
   </div>

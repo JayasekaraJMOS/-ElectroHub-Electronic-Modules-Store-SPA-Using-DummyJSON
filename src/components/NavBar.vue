@@ -1,100 +1,77 @@
 <script setup lang="ts">
-import { useCartStore } from '../stores/cart'
-import { useAuthStore } from '../stores/auth'
-import { useThemeStore } from '../stores/theme'
 import { useRouter } from 'vue-router'
+import { useAuthStore } from '../stores/auth'
+import { useCartStore } from '../stores/cart'
+import { useThemeStore } from '../stores/theme'
+import { useSearchStore } from '../stores/search'
 
-const cart = useCartStore()
-const auth = useAuthStore()
-const theme = useThemeStore()
 const router = useRouter()
-cart.load()
-auth.loadSavedAuth()
+const auth = useAuthStore()
+const cart = useCartStore()
+const theme = useThemeStore()
+const search = useSearchStore()
 
-const goToHome = () => {
-  router.push('/')
-}
-
-const goToCart = () => {
-  router.push('/cart')
-}
-
+const goToHome = () => router.push('/')
+const goToCart = () => router.push('/cart')
+const login = () => router.push('/login')
 const logout = () => {
   auth.logout()
-  router.push('/login')
-}
-
-const login = () => {
-  router.push('/login')
+  router.push('/')
 }
 </script>
 
 <template>
-  <nav class="sticky top-0 z-50 bg-[#f85606] shadow-sm transition-colors duration-300">
-    <!-- Top thin bar -->
-    <div class="bg-[#f85606] border-b border-white/10">
-      <div class="max-w-7xl mx-auto px-4 py-1 flex justify-end items-center gap-6 text-[12px] text-white">
-        <a href="#" class="hover:underline">SAVE MORE ON APP</a>
-        <a href="#" class="hover:underline">BECOME A SELLER</a>
-        <a href="#" class="hover:underline">HELP & SUPPORT</a>
-        <button v-if="!auth.isAuthenticated" @click="login" class="hover:underline font-bold uppercase">LOGIN</button>
-        <button v-if="!auth.isAuthenticated" @click="router.push('/register')" class="hover:underline font-bold uppercase">SIGN UP</button>
-        <button v-if="auth.isAuthenticated" @click="logout" class="hover:underline font-bold uppercase">LOGOUT</button>
-        <span class="cursor-pointer">ဘာသာစကားရွေးချယ်ရန်</span>
-      </div>
-    </div>
-
-    <!-- Main Nav -->
-    <div class="max-w-7xl mx-auto px-4 py-3 flex items-center gap-8">
+  <header class="sticky top-0 z-50 bg-[#ff6600] text-white shadow-md">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
       <!-- Logo -->
-      <button @click="goToHome" class="flex items-center gap-2 flex-shrink-0 transition active:scale-95">
-        <div class="flex items-center">
-          <span class="text-4xl text-white font-bold italic tracking-tighter">Daraz</span>
-          <div class="ml-1 w-2 h-2 bg-white rounded-full"></div>
-        </div>
+      <button @click="goToHome" class="text-2xl font-bold tracking-tight italic shrink-0">
+        OnlineStore
       </button>
 
+      <!-- Navigation Links -->
+      <nav class="hidden md:flex items-center gap-4 text-sm">
+        <a href="#" class="hover:underline">Save on App</a>
+        <a href="#" class="hover:underline">Sell</a>
+        <a href="#" class="hover:underline">Help</a>
+      </nav>
+
       <!-- Search Bar -->
-      <div class="flex-grow flex items-center group">
-        <div class="relative w-full">
+      <div class="flex-grow max-w-2xl mx-4">
+        <div class="flex bg-[var(--card-bg)] dark:bg-gray-800 rounded border border-[var(--border-color)] overflow-hidden">
           <input 
             type="text" 
-            placeholder="Search in Daraz"
-            class="w-full bg-[#eff0f5] py-2 px-4 rounded-sm text-sm focus:outline-none focus:ring-1 focus:ring-orange-200"
+            v-model="search.query"
+            placeholder="Search in OnlineStore"
+            class="w-full py-2 px-4 text-sm text-[var(--text-color)] bg-transparent focus:outline-none"
           >
-          <button class="absolute right-0 top-0 bottom-0 bg-[#ffe1d2] hover:bg-[#ffcbb3] px-5 flex items-center justify-center transition">
-             <span class="text-orange-600">🔍</span>
+          <button class="bg-gray-100 dark:bg-gray-700 px-4 hover:bg-gray-200 dark:hover:bg-gray-600 transition text-[#ff6600]">
+            🔍
           </button>
         </div>
       </div>
 
-      <!-- Right Icons -->
-      <div class="flex items-center gap-8 flex-shrink-0">
-        <!-- Cart -->
-        <button @click="goToCart" class="relative group p-1 transition-transform active:scale-90">
-          <span class="text-3xl text-white">🛒</span>
-          <span 
-            v-if="cart.count > 0"
-            class="absolute -top-1 -right-2 bg-white text-[#f85606] text-[10px] font-bold w-5 h-5 flex items-center justify-center rounded-full shadow-sm border border-orange-100"
-          >
+      <!-- Actions -->
+      <div class="flex items-center gap-4 shrink-0">
+        <div v-if="!auth.isAuthenticated" class="hidden sm:flex items-center gap-3">
+          <button @click="login" class="font-bold hover:underline">LOGIN</button>
+          <button @click="router.push('/register')" class="font-bold hover:underline">SIGN UP</button>
+        </div>
+        <div v-else class="flex items-center gap-3">
+          <span class="text-sm font-bold truncate max-w-[100px]">{{ auth.username }}</span>
+          <button @click="logout" class="text-xs hover:underline">Logout</button>
+        </div>
+
+        <button @click="goToCart" class="relative hover:scale-105 transition">
+          <span class="text-2xl">🛒</span>
+          <span v-if="cart.count > 0" class="absolute -top-1 -right-1 bg-yellow-400 text-gray-900 text-[10px] font-bold w-4 h-4 flex items-center justify-center rounded-full shadow-sm">
             {{ cart.count }}
           </span>
         </button>
 
-        <!-- User/Logout -->
-        <div v-if="auth.isAuthenticated" class="flex items-center gap-3 bg-white/10 px-3 py-1.5 rounded-md">
-           <span class="text-white text-sm font-medium">{{ auth.username }}</span>
-        </div>
-
-        <!-- Dark Mode Toggle (Kept for functionality) -->
-        <button
-          @click="theme.toggleDarkMode"
-          class="p-2 bg-white/10 hover:bg-white/20 rounded-full transition text-white text-sm"
-          :title="theme.isDark ? 'Light mode' : 'Dark mode'"
-        >
+        <button @click="theme.toggleDarkMode" class="p-1 hover:bg-white/10 rounded-full transition">
           {{ theme.isDark ? '☀️' : '🌙' }}
         </button>
       </div>
     </div>
-  </nav>
+  </header>
 </template>
