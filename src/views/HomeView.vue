@@ -193,7 +193,7 @@ const visibleFlashProducts = computed(() => {
         <div v-for="i in 12" :key="i" class="aspect-[3/4] bg-[var(--card-bg)] rounded-md animate-pulse"></div>
       </div>
 
-      <div v-else class="grid grid-cols-[repeat(auto-fill,minmax(180px,1fr))] md:grid-cols-[repeat(auto-fill,minmax(220px,1fr))] gap-4">
+      <div v-else class="products-grid">
         <ProductCard
           v-for="item in products"
           :key="item.id"
